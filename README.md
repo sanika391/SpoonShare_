@@ -1,4 +1,3 @@
-![5bc61b61-8278-44b5-aaa1-2507f5a6c5c3](https://github.com/shuence/SpoonShare/assets/65482186/97a36226-13be-428b-98ff-c2db9008dd63)
 # SpoonShare 🥣
 
 **Problem Statement**: Inadequate surplus food distribution generates hunger, necessitating a comprehensive solution. Our project addresses this challenge through an innovative platform, connecting donors with recipients to bridge the gap in food distribution.
