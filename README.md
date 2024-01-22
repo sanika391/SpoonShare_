@@ -1,4 +1,4 @@
-
+![5bc61b61-8278-44b5-aaa1-2507f5a6c5c3](https://github.com/shuence/SpoonShare/assets/65482186/97a36226-13be-428b-98ff-c2db9008dd63)
 # SpoonShare 🥣
 
 **Problem Statement**: Inadequate surplus food distribution generates hunger, necessitating a comprehensive solution. Our project addresses this challenge through an innovative platform, connecting donors with recipients to bridge the gap in food distribution.
@@ -17,8 +17,9 @@ Here you can view the deployed version
 
 ## Intro To SpoonShare Video
 
-[![Intro To SpoonShare](https://github.com/shuence/SpoonShare/assets/65482186/ff3a926f-f796-4609-8502-6b5948efcbd5)
+[![Intro To SpoonShare](https://github.com/shuence/SpoonShare/assets/65482186/499f16d8-d481-4c7e-822b-7595897cac2f)
 ](https://www.youtube.com/watch?v=IKbxF7SYE3Q&ab_channel=SanikaChavan)
+
 
 
 Short but detailed introduction to SpoonShare. Click on the image above to watch the video.
