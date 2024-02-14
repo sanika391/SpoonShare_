@@ -40,6 +40,9 @@ flutter:
    - assets/images/mail.png
    - assets/images/spoonshare_launcher.png
    - assets/images/thankyou.jpg
+   - assets/images/thankubg.png
+   - assets/images/pan_image.png
+   
 
 
 flutter_launcher_icons:
