@@ -35,7 +35,7 @@ class ThankYouScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  'assets/images/pan_image.png', // Path to the pan image
+                  'assets/images/pan.png', // Path to the pan image
                   width: 250,
                   height: 200,
                   // You can adjust width and height as needed
