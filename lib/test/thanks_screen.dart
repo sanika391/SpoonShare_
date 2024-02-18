@@ -1,22 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:spoonshare/screens/home/home.dart';
-import 'package:spoonshare/widgets/bottom_navbar.dart';
 
-class ThankYouScreen extends StatelessWidget {
-  const ThankYouScreen({Key? key}) : super(key: key);
-
+class ThanksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
-    });
-
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -35,7 +21,7 @@ class ThankYouScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  'assets/images/pan.png', // Path to the pan image
+                  'assets/images/pan_image.png', // Path to the pan image
                   width: 250,
                   height: 200,
                   // You can adjust width and height as needed
