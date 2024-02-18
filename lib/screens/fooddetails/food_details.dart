@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 
 class FoodDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -33,7 +33,6 @@ class FoodDetailsScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
@@ -41,16 +40,24 @@ class FoodDetailsScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                Text(
-                  'Food Details: ${data['venue'] ?? ''}',
-                  style: const TextStyle(
+                const Text(
+                  'Food Details:',
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                    width: 42, height: 42), 
               ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 30),
+              child: Text(
+                '${data['venue'] ?? ''}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             Container(
@@ -80,15 +87,17 @@ class FoodDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Image.network(
-                        data['imageUrl'] ?? '',
-                        height: 200,
-                        width: double.infinity,
-                      ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                      Radius.circular(50),
+                    )),
+                    child: Image.network(
+                      data['imageUrl'] ?? '',
+                      height: 250,
+                      width: 400,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Padding(
@@ -184,7 +193,7 @@ class FoodDetailsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     child: ElevatedButton(
                       onPressed: () =>
-                          _launchMaps(data['venue'] + data['address'] ),
+                          _launchMaps(data['address']),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,

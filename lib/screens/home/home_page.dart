@@ -283,12 +283,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 5),
+                  SizedBox(height: 5),
                   NearbyFoodCard(),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 5),
                 ],
               ),
             ],

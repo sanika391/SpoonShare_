@@ -78,10 +78,11 @@ class _DonatePageState extends State<DonatePage> {
                         });
                       },
                       child: Container(
-                        width: 180,
+                        width: 160,
                         height: 40,
                         decoration: ShapeDecoration(
-                          color: isShareFoodSelected ? Colors.black : Colors.white,
+                          color:
+                              isShareFoodSelected ? Colors.black : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
@@ -90,7 +91,9 @@ class _DonatePageState extends State<DonatePage> {
                           child: Text(
                             'Share Food',
                             style: TextStyle(
-                              color: isShareFoodSelected ? Colors.white : Colors.black,
+                              color: isShareFoodSelected
+                                  ? Colors.white
+                                  : Colors.black,
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
@@ -111,7 +114,9 @@ class _DonatePageState extends State<DonatePage> {
                         width: 180,
                         height: 40,
                         decoration: ShapeDecoration(
-                          color: isDonateFoodSelected ? Colors.black : Colors.white,
+                          color: isDonateFoodSelected
+                              ? Colors.black
+                              : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
@@ -120,7 +125,9 @@ class _DonatePageState extends State<DonatePage> {
                           child: Text(
                             'Donate Food',
                             style: TextStyle(
-                              color: isDonateFoodSelected ? Colors.white : Colors.black,
+                              color: isDonateFoodSelected
+                                  ? Colors.white
+                                  : Colors.black,
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
@@ -133,13 +140,11 @@ class _DonatePageState extends State<DonatePage> {
                   ],
                 ),
               ),
-              // Conditional rendering of ShareFoodScreen content
               if (isShareFoodSelected) ...[
                 ShareFoodScreenContent(),
               ],
-              // Conditional rendering of DonateScreen content
               if (isDonateFoodSelected) ...[
-                DonateFoodScreenContent(),
+                const DonateFoodScreenContent(),
               ],
             ],
           ),
@@ -148,5 +153,4 @@ class _DonatePageState extends State<DonatePage> {
       bottomNavigationBar: const BottomNavBar(),
     );
   }
-
 }

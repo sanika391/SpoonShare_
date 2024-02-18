@@ -9,10 +9,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/donate/thank_you.dart';
+import 'package:spoonshare/widgets/auto_complete.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
 import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:uuid/uuid.dart';
 
 class ShareFoodScreenContent extends StatefulWidget {
   @override
@@ -31,175 +33,277 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
 
   File? _imageFile;
   String _selectedFoodType = '';
+  late double lat;
+  late double lng;
+  bool _addressSelected = false;
+
+  String tokenForSession = "12345";
+  List<Map<String, dynamic>> listForPlaces = [];
+  var uuid = const Uuid();
+
+  Future<void> makeSuggestions(String input) async {
+    try {
+      var suggestions = await PlaceApi.getSuggestions(input);
+      setState(() {
+        listForPlaces = suggestions;
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _addressController.addListener(onModify);
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  void onModify() {
+    if (tokenForSession.isEmpty) {
+      setState(() {
+        tokenForSession = uuid.v4();
+      });
+    }
+    makeSuggestions(_addressController.text);
+  }
+
+  Future<void> handleListItemTap(int index) async {
+    String placeId = listForPlaces[index]['place_id'];
+    var placeDetails = await PlaceApi.getPlaceDetails(placeId);
+    double selectedLat = placeDetails['geometry']['location']['lat'];
+    double selectedLng = placeDetails['geometry']['location']['lng'];
+    String selectedAddress = listForPlaces[index]['description'];
+    print(selectedAddress);
+    print(selectedLat);
+    print(selectedLng);
+
+    setState(() {
+      _addressController.text = selectedAddress;
+      lat =
+          selectedLat; // Update the class-level variables with the selected values
+      lng = selectedLng;
+      _addressSelected = true; // Set _addressSelected to true
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool showExpandedList =
+        _addressController.text.isNotEmpty && !_addressSelected;
+
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            _buildImageUploadBox(),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'Venue*',
+              controller: _venueController,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'Enter Address*',
+              controller: _addressController,
+            ),
+            if (showExpandedList)
+              Container(
+                height: 200, // Set the height of the suggestions container
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ListView.builder(
+                  itemCount: listForPlaces.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () async {
+                        _addressSelected = true;
+                        await handleListItemTap(index);
+                      },
+                      title: Text(
+                        listForPlaces[index]['description'],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'For whom it is? (Community)*',
+              controller: _communityController,
+            ),
+            const SizedBox(height: 16),
+            _buildDateAndTimeInputs(context),
+            const SizedBox(height: 16),
+            _buildDropdownInput(),
+            const SizedBox(height: 16),
+            _buildSubmitButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateAndTimeInputs(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
-        _buildImageUploadBox(),
-        const SizedBox(height: 16),
-        CustomTextField(
-          label: 'Venue',
-          controller: _venueController,
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('From Date*'),
+                  TextField(
+                    controller: _dateController,
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? selectedDate =
+                          await _selectDate(context, _dateController);
+                      if (selectedDate != null) {
+                        _dateController.text =
+                            selectedDate.toLocal().toString().split(' ')[0];
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Select Date*',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('From Time*'),
+                  TextField(
+                    controller: _timeController,
+                    readOnly: true,
+                    onTap: () async {
+                      TimeOfDay? selectedTime =
+                          await _selectTime(context, _timeController);
+                      if (selectedTime != null) {
+                        _timeController.text = selectedTime.format(context);
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Select Time*',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
-        CustomTextField(
-          label: 'Enter Address',
-          controller: _addressController,
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('To Date*'),
+                  TextField(
+                    controller: _toDateController,
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? selectedDate =
+                          await _selectDate(context, _toDateController);
+                      if (selectedDate != null) {
+                        _toDateController.text =
+                            selectedDate.toLocal().toString().split(' ')[0];
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Select Date*',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('To Time*'),
+                  TextField(
+                    controller: _toTimeController,
+                    readOnly: true,
+                    onTap: () async {
+                      TimeOfDay? selectedTime =
+                          await _selectTime(context, _toTimeController);
+                      if (selectedTime != null) {
+                        _toTimeController.text = selectedTime.format(context);
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Select Time*',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
-        CustomTextField(
-          label: 'For whom it is? (Commuity)',
-          controller: _communityController,
-        ),
-        const SizedBox(height: 16),
-        _buildDateAndTimeInputs(context),
-        const SizedBox(height: 16),
-        _buildDropdownInput(),
-        const SizedBox(height: 16),
-        _buildSubmitButton(),
       ],
     );
   }
 
-Widget _buildDateAndTimeInputs(BuildContext context) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('From Date'),
-                TextField(
-                  controller: _dateController,
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? selectedDate = await _selectDate(context, _dateController);
-                    if (selectedDate != null) {
-                      _dateController.text = selectedDate.toLocal().toString().split(' ')[0];
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Select Date',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('From Time'),
-                TextField(
-                  controller: _timeController,
-                  readOnly: true,
-                  onTap: () async {
-                    TimeOfDay? selectedTime = await _selectTime(context, _timeController);
-                    if (selectedTime != null) {
-                      _timeController.text = selectedTime.format(context);
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Select Time',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 16),
-      Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('To Date'),
-                TextField(
-                  controller: _toDateController,
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? selectedDate = await _selectDate(context, _toDateController);
-                    if (selectedDate != null) {
-                      _toDateController.text = selectedDate.toLocal().toString().split(' ')[0];
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Select Date',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('To Time'),
-                TextField(
-                  controller: _toTimeController,
-                  readOnly: true,
-                  onTap: () async {
-                    TimeOfDay? selectedTime = await _selectTime(context, _toTimeController);
-                    if (selectedTime != null) {
-                      _toTimeController.text = selectedTime.format(context);
-                    }
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Select Time',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
-  );
-}
+  Future<DateTime?> _selectDate(
+      BuildContext context, TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
 
-Future<DateTime?> _selectDate(
-    BuildContext context, TextEditingController controller) async {
-  final DateTime? picked = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime.now(),
-    lastDate: DateTime.now().add(const Duration(days: 365)),
-  );
+    if (picked != null) {
+      controller.text = picked.toLocal().toString().split(' ')[0];
+    }
 
-  if (picked != null) {
-    controller.text = picked.toLocal().toString().split(' ')[0];
+    return picked;
   }
 
-  return picked;
-}
+  Future<TimeOfDay?> _selectTime(
+      BuildContext context, TextEditingController controller) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
 
-Future<TimeOfDay?> _selectTime(
-    BuildContext context, TextEditingController controller) async {
-  final TimeOfDay? picked = await showTimePicker(
-    context: context,
-    initialTime: TimeOfDay.now(),
-  );
+    if (picked != null) {
+      controller.text = picked.format(context);
+    }
 
-  if (picked != null) {
-    controller.text = picked.format(context);
+    return picked;
   }
-
-  return picked;
-}
 
   Widget _buildImageUploadBox() {
     return Center(
@@ -355,15 +459,23 @@ Future<TimeOfDay?> _selectTime(
 
   void submitFood() async {
     // Check if all required fields are filled
-    if (_imageFile == null || _selectedFoodType.isEmpty) {
+    if (_imageFile == null ||
+        _selectedFoodType.isEmpty ||
+        _venueController.text.isEmpty ||
+        _addressController.text.isEmpty ||
+        _communityController.text.isEmpty ||
+        _dateController.text.isEmpty ||
+        _timeController.text.isEmpty ||
+        _toDateController.text.isEmpty ||
+        _toTimeController.text.isEmpty) {
       // Show an error message to the user
       showErrorSnackbar(context, 'Please fill all required fields');
       return;
     }
 
-    try {
-      showLoadingDialog(context);
+    showLoadingDialog(context);
 
+    try {
       String userId = FirebaseAuth.instance.currentUser!.uid;
       UserProfile userProfile = UserProfile();
       String fullName = userProfile.getFullName();
@@ -385,6 +497,8 @@ Future<TimeOfDay?> _selectTime(
         'imageUrl': imageUrl,
         'venue': venue,
         'address': address,
+        'lat': lat,
+        'lng': lng,
         'community': community,
         'foodType': _selectedFoodType,
         'date': date,
@@ -400,7 +514,6 @@ Future<TimeOfDay?> _selectTime(
           .collection("foodData")
           .add(foodData);
 
-      Navigator.of(context).pop();
       showSuccessSnackbar(context, 'Food submitted successfully!');
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ThankYouScreen()));
@@ -421,6 +534,7 @@ Future<TimeOfDay?> _selectTime(
       setState(() {
         _selectedFoodType = '';
       });
+      Navigator.of(context).pop();
     }
   }
 

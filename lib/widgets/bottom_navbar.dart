@@ -5,6 +5,7 @@ import 'package:spoonshare/screens/donate/donate_page.dart';
 import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/screens/jobs/job_page.dart';
 import 'package:spoonshare/screens/profile/user_profile.dart';
+import 'package:spoonshare/widgets/maps_widget.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -32,8 +33,8 @@ class BottomNavBar extends StatelessWidget {
         children: [
           _buildNavItem(context, Icons.home, 'Home', Colors.black54,
               Colors.black54, HomePage(name: name, role: role)),
-          _buildNavItem(context, Icons.chat, 'Chat', Colors.black54,
-              Colors.black54, const ChatPage()),
+          _buildNavItem(context, Icons.map, 'Map', Colors.black54,
+              Colors.black54, MapsWidget()),
           _buildNavItem(context, Icons.add_circle, 'Donate Food',
               Colors.black54, Colors.black54, const DonatePage()),
           _buildNavItem(context, Icons.work, 'Jobs', Colors.black54,

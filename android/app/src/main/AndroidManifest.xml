@@ -24,6 +24,9 @@
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
+         <meta-data android:name="com.google.android.geo.API_KEY"
+                android:value="${MAPS_API_KEY}"/>
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
@@ -50,6 +53,7 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2" />
+            android:value="2" 
+            />
     </application>
 </manifest>
