@@ -239,17 +239,27 @@ class NearbyFoodCard extends StatelessWidget {
   }
 
 // Function to check if the food item is past its expiration date
-  bool isPast(Map<String, dynamic> data) {
-    String toDateString = data['toDate'];
-    String toTimeString = data['toTime'];
+bool isPast(Map<String, dynamic> data) {
+  String toDateString = data['toDate']?.trim() ?? '';
+  String toTimeString = data['toTime']?.trim() ?? '';
 
-    // Parse to date and time
-    DateTime toDate =
-        DateFormat('yyyy-MM-dd hh:mm a').parse('$toDateString $toTimeString');
+  // Parse to date and time
+  DateTime toDate = DateFormat('yyyy-MM-dd').parse(toDateString);
+  DateTime toTime = DateFormat('hh:mm a').parse(toTimeString);
 
-    // Format the current date and time
-    DateTime currentDateTime = DateTime.now();
+  // Combine date and time into a single DateTime object
+  DateTime combinedDateTime = DateTime(
+    toDate.year,
+    toDate.month,
+    toDate.day,
+    toTime.hour,
+    toTime.minute,
+  );
 
-    return toDate.isBefore(currentDateTime);
-  }
+  // Format the current date and time
+  DateTime currentDateTime = DateTime.now();
+
+  return combinedDateTime.isBefore(currentDateTime);
+}
+
 }

@@ -190,10 +190,10 @@ class PastFoodCard extends StatelessWidget {
             Position userLocation = positionSnapshot.data!;
 
             // Filter and sort food docs by location and verification status
+            // Filter and sort food docs by location and verification status
             foodDocs = foodDocs.where((doc) {
               bool isVerified = doc.data()['verified'] ?? false;
-              bool isDailyActive = doc.data()['dailyActive'] ??
-                  true; // Check if dailyactive is true
+              bool isDailyActive = doc.data()['dailyActive'] ?? true;
               GeoPoint foodLocation = doc.data()['location'];
               double distance = Geolocator.distanceBetween(
                 userLocation.latitude,
@@ -201,19 +201,14 @@ class PastFoodCard extends StatelessWidget {
                 foodLocation.latitude,
                 foodLocation.longitude,
               );
+              bool isFoodPast =
+                  isPast(doc.data()); // Check if the food item is past
 
-              if (!isDailyActive) {
-                bool isFoodPast =
-                    isPast(doc.data()); // Check if the food item is past
+              if (!isDailyActive && isFoodPast) {
                 return isVerified &&
-                    distance <= 30000 &&
-                    isFoodPast; // Show if not past and not dailyactive
+                    distance <= 30000; // Show if not daily active and past
               } else {
-                bool isFoodPast =
-                    isPast(doc.data()); // Check if the food item is past
-                return isVerified &&
-                    distance <= 30000 &&
-                    !isFoodPast; // Show if dailyactive is true and past
+                return false; // Don't show if daily active
               }
             }).toList();
 
@@ -249,16 +244,25 @@ class PastFoodCard extends StatelessWidget {
 
 // Function to check if the food item is past its expiration date
   bool isPast(Map<String, dynamic> data) {
-    String toDateString = data['toDate'];
-    String toTimeString = data['toTime'];
+    String toDateString = data['toDate']?.trim() ?? '';
+    String toTimeString = data['toTime']?.trim() ?? '';
 
     // Parse to date and time
-    DateTime toDate =
-        DateFormat('yyyy-MM-dd hh:mm a').parse('$toDateString $toTimeString');
+    DateTime toDate = DateFormat('yyyy-MM-dd').parse(toDateString);
+    DateTime toTime = DateFormat('hh:mm a').parse(toTimeString);
+
+    // Combine date and time into a single DateTime object
+    DateTime combinedDateTime = DateTime(
+      toDate.year,
+      toDate.month,
+      toDate.day,
+      toTime.hour,
+      toTime.minute,
+    );
 
     // Format the current date and time
     DateTime currentDateTime = DateTime.now();
 
-    return toDate.isBefore(currentDateTime);
+    return combinedDateTime.isBefore(currentDateTime);
   }
 }

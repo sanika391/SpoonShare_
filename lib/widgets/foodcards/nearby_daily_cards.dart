@@ -88,7 +88,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(width: 8), 
+                        const SizedBox(width: 8),
                         if (isNGOVerified)
                           const Icon(Icons.verified,
                               color: Colors.green, size: 16),
@@ -173,6 +173,8 @@ class NearbyDailyFoodCard extends StatelessWidget {
           .doc('sharedfood')
           .collection('foodData')
           .where('dailyActive', isEqualTo: dailyActive)
+          .where('verified',
+              isEqualTo: true)
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -198,34 +200,6 @@ class NearbyDailyFoodCard extends StatelessWidget {
             Position userLocation = positionSnapshot.data!;
 
             // Filter and sort food docs by location and verification status
-            foodDocs.sort((a, b) {
-              GeoPoint aLocation = a.data()['location'];
-              GeoPoint bLocation = b.data()['location'];
-              double distanceA = Geolocator.distanceBetween(
-                userLocation.latitude,
-                userLocation.longitude,
-                aLocation.latitude,
-                aLocation.longitude,
-              );
-              double distanceB = Geolocator.distanceBetween(
-                userLocation.latitude,
-                userLocation.longitude,
-                bLocation.latitude,
-                bLocation.longitude,
-              );
-              bool isVerifiedA = a.data()['verified'] ?? false;
-              bool isVerifiedB = b.data()['verified'] ?? false;
-
-              // Sort by verification status first
-              if (isVerifiedA != isVerifiedB) {
-                return isVerifiedB ? 1 : -1; // Verified items come first
-              } else {
-                // If verification status is the same, sort by distance
-                return distanceA.compareTo(distanceB);
-              }
-            });
-
-            // Filter out documents beyond 30 km
             foodDocs = foodDocs.where((doc) {
               GeoPoint foodLocation = doc.data()['location'];
               double distance = Geolocator.distanceBetween(
@@ -234,7 +208,8 @@ class NearbyDailyFoodCard extends StatelessWidget {
                 foodLocation.latitude,
                 foodLocation.longitude,
               );
-              return distance <= 30000; // 30 km in meters
+              return distance <= 30000 &&
+                  distance >= 0; // Adjust distance condition here
             }).toList();
 
             return Column(

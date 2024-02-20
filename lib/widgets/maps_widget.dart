@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart' as location;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:spoonshare/screens/fooddetails/food_details.dart';
@@ -76,29 +77,74 @@ class _MapsWidgetState extends State<MapsWidget> {
       double lat = doc['location'].latitude;
       double lng = doc['location'].longitude;
       String venue = doc['venue'];
-      bool dailyActive = doc['dailyActive'] ?? false;
-      Timestamp timestamp = doc['timestamp'];
+      bool dailyActive = doc['dailyActive'] ?? true;
 
-      if (timestamp.toDate().isAfter(DateTime.now()) || dailyActive) {
-        InfoWindow infoWindow = InfoWindow(
-          title: venue,
-          snippet: "click here for more details",
-          onTap: () => _navigateToFoodDetails(
-              context, doc.data() as Map<String, dynamic>),
-        );
+      bool isVerified = doc['verified'] ?? true;
 
-        Marker marker = Marker(
-          markerId: MarkerId('$lat,$lng'),
-          position: LatLng(lat, lng),
-          infoWindow: infoWindow,
-          icon: customMarkerIcon,
-        );
+      if (!dailyActive) {
+        bool isFoodPast = isPast(doc.data() as Map<String, dynamic>);
+        if (isVerified && !isFoodPast) {
+          InfoWindow infoWindow = InfoWindow(
+            title: venue,
+            snippet: "click here for more details",
+            onTap: () => _navigateToFoodDetails(
+                context, doc.data() as Map<String, dynamic>),
+          );
 
-        markers.add(marker);
+          Marker marker = Marker(
+            markerId: MarkerId('$lat,$lng'),
+            position: LatLng(lat, lng),
+            infoWindow: infoWindow,
+            icon: customMarkerIcon,
+          );
+
+          markers.add(marker);
+        }
+      } else {
+        if (isVerified) {
+          InfoWindow infoWindow = InfoWindow(
+            title: venue,
+            snippet: "click here for more details",
+            onTap: () => _navigateToFoodDetails(
+                context, doc.data() as Map<String, dynamic>),
+          );
+
+          Marker marker = Marker(
+            markerId: MarkerId('$lat,$lng'),
+            position: LatLng(lat, lng),
+            infoWindow: infoWindow,
+            icon: customMarkerIcon,
+          );
+
+          markers.add(marker);
+        }
       }
     }
 
     return markers;
+  }
+
+  bool isPast(Map<String, dynamic> data) {
+    String toDateString = data['toDate']?.trim() ?? '';
+    String toTimeString = data['toTime']?.trim() ?? '';
+
+    // Parse to date and time
+    DateTime toDate = DateFormat('yyyy-MM-dd').parse(toDateString);
+    DateTime toTime = DateFormat('hh:mm a').parse(toTimeString);
+
+    // Combine date and time into a single DateTime object
+    DateTime combinedDateTime = DateTime(
+      toDate.year,
+      toDate.month,
+      toDate.day,
+      toTime.hour,
+      toTime.minute,
+    );
+
+    // Format the current date and time
+    DateTime currentDateTime = DateTime.now();
+
+    return combinedDateTime.isBefore(currentDateTime);
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
