@@ -32,7 +32,7 @@ class FoodDetailsScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFF9F1C),
         titleTextStyle: const TextStyle(
             color: Colors.white,
-            fontFamily: 'Lora',
+            fontFamily: 'DM Sans',
             fontSize: 18,
             fontWeight: FontWeight.w700),
         leading: IconButton(

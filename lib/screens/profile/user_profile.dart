@@ -83,17 +83,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi ${widget.name}',
+                        'Hello👋 ${widget.name}',
                         style: const TextStyle(
                           fontSize: 20,
+                          fontFamily: 'Lora',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         widget.role,
-                        style: const TextStyle(
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
                           fontSize: 16,
-                          color: Colors.grey,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                          letterSpacing: 1.68,
                         ),
                       ),
                     ],
@@ -101,17 +106,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(width: 8),
                       Container(
                         width: 42,
                         height: 42,
                         decoration: ShapeDecoration(
-                          color: Colors.black.withOpacity(0.08),
+                          color: const Color(0xFFFF9F1C),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
                         child: IconButton(
                           icon: const Icon(Icons.logout),
+                          color: Colors.white,
                           onPressed: () {
                             authService.signOut(context);
                           },
@@ -121,16 +128,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 14),
               Container(
-                width: 360,
+                width: MediaQuery.of(context).size.width,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
-                      width: 2,
+                      width: 1,
                       color: Colors.black.withOpacity(0.1),
                     ),
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius:
+                        BorderRadius.circular(15), // Added border radius
                   ),
                 ),
               ),

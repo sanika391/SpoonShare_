@@ -46,7 +46,7 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     fetchUserProfileData();
   }
 
-   Future<void> fetchNGOData() async {
+  Future<void> fetchNGOData() async {
     try {
       // Fetch NGO data from Firestore
       QuerySnapshot querySnapshot =
@@ -240,11 +240,10 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
                   const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
               child: Autocomplete<NGO>(
                 key: _ngoKey,
-                 optionsBuilder: (TextEditingValue textEditingValue) {
-                  final options = _ngos.where((ngo) =>
-                      ngo.ngoname
-                          .toLowerCase()
-                          .contains(textEditingValue.text.toLowerCase()));
+                optionsBuilder: (TextEditingValue textEditingValue) {
+                  final options = _ngos.where((ngo) => ngo.ngoname
+                      .toLowerCase()
+                      .contains(textEditingValue.text.toLowerCase()));
                   return options.toList();
                 },
                 onSelected: (NGO? value) {
@@ -294,7 +293,7 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
                     child: Material(
                       elevation: 4.0,
                       child: SizedBox(
-                        height: 200.0,
+                        height: 250.0,
                         child: ListView.builder(
                           itemCount: options.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -387,6 +386,7 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
 
         // Show success message
         showSuccessSnackbar(context, 'Form submitted successfully');
+        Navigator.pop(context);
       } catch (error) {
         // Show error message if submission fails
         showErrorSnackbar(context, 'Error submitting form: $error');
@@ -394,7 +394,6 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     } else {
       // Show error message indicating that all fields are required
       showErrorSnackbar(context, 'All fields are required');
-   
     }
   }
 }

@@ -454,6 +454,7 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
       UserProfile userProfile = UserProfile();
       String fullName = userProfile.getFullName();
       String pickup = _pickuplocationController.text;
+      String address = _addressController.text;
       String foodlife = _foodlifeController.text;
       String fooddescription = _fooddescriptionController.text;
       String foodquantity = _foodquantityController.text;
@@ -470,6 +471,7 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
         'userId': userId,
         'fullName': fullName,
         'pickup': pickup,
+        'address': address,
         'image': imageurl,
         'location': location,
         'foodlife': foodlife,
@@ -478,6 +480,7 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
         'foodType': _selectedFoodType,
         'date': date,
         'toTime': toTime,
+        'verified': false,
         'timestamp': FieldValue.serverTimestamp(),
       };
       // Save food data under the user's document in the 'sharedFood' collection

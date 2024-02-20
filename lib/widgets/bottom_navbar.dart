@@ -3,7 +3,7 @@ import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/dashboard/dashboard_home.dart';
 import 'package:spoonshare/screens/donate/donate_page.dart';
 import 'package:spoonshare/screens/home/home_page.dart';
-import 'package:spoonshare/screens/jobs/job_page.dart';
+import 'package:spoonshare/screens/recycle/recycle.dart';
 import 'package:spoonshare/screens/profile/user_profile.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -32,12 +32,19 @@ class BottomNavBar extends StatelessWidget {
         children: [
           _buildNavItem(context, Icons.home, 'Home', const Color(0xFFFF9F1C),
               Colors.black54, HomePage(name: name, role: role)),
-          _buildNavItem(context, Icons.dashboard, 'Dashboard',
-              const Color(0xFFFF9F1C), Colors.black54, DashboardHomePage(role: role,)),
+          _buildNavItem(
+              context,
+              Icons.dashboard,
+              'Dashboard',
+              const Color(0xFFFF9F1C),
+              Colors.black54,
+              DashboardHomePage(
+                role: role,
+              )),
           _buildNavItem(context, Icons.add_circle, 'Donate Food',
               Colors.black54, const Color(0xFFFF9F1C), const DonatePage()),
-          _buildNavItem(context, Icons.work, 'Jobs', const Color(0xFFFF9F1C),
-              Colors.black54, const JobPage()),
+          _buildNavItem(context, Icons.recycling, 'Recycle',
+              const Color(0xFFFF9F1C), Colors.black54, const RecycleScreen()),
           _buildNavItem(
               context,
               Icons.person,
