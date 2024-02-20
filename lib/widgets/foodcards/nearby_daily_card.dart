@@ -84,6 +84,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                           data['venue'],
                           style: const TextStyle(
                             fontSize: 16,
+                            fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -117,6 +118,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                       'Uploaded By: ${data['fullName']}',
                       style: const TextStyle(
                         fontSize: 14,
+                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -124,6 +126,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                       'Food Type: ${data['foodType']}',
                       style: const TextStyle(
                         fontSize: 14,
+                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -140,6 +143,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                       'Uploaded: $uploadTime',
                       style: const TextStyle(
                         fontSize: 14,
+                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -147,6 +151,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                       'Daily: ${data['dailyActive']}',
                       style: const TextStyle(
                         fontSize: 14,
+                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                       ),
                     ),

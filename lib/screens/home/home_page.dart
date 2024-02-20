@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/maps_widget.dart';
-import 'package:spoonshare/widgets/nearby_daily_card.dart';
-import 'package:spoonshare/widgets/nearby_food_cards.dart';
+import 'package:spoonshare/widgets/foodcards/nearby_daily_card.dart';
+import 'package:spoonshare/widgets/foodcards/nearby_food_cards.dart';
+import 'package:spoonshare/widgets/foodcards/past_free_food.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.name, required this.role})
@@ -203,6 +204,35 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+                   Visibility(
+                visible: selectedIndex == 0,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    'Past Free Foods',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: selectedIndex == 0,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 5),
+                    PastFoodCard(),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
+            
               Visibility(
                 visible: selectedIndex != 0,
                 child: Column(

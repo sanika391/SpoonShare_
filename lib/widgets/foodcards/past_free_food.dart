@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:spoonshare/screens/fooddetails/food_details.dart';
 
-class NearbyFoodCard extends StatelessWidget {
-  const NearbyFoodCard({Key? key});
+class PastFoodCard extends StatelessWidget {
+  const PastFoodCard({super.key});
 
   Future<double> _calculateDistance(
       GeoPoint foodLocation, Position userLocation) async {
@@ -56,6 +57,7 @@ class NearbyFoodCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
+          color: Colors.black.withOpacity(0.2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -82,6 +84,8 @@ class NearbyFoodCard extends StatelessWidget {
                           data['venue'],
                           style: const TextStyle(
                             fontSize: 16,
+                            fontFamily: 'DM Sans',
+                            color: Colors.white,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -99,6 +103,7 @@ class NearbyFoodCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
+                        color: Colors.white,
                         fontFamily: "DM Sans",
                       ),
                     ),
@@ -115,6 +120,8 @@ class NearbyFoodCard extends StatelessWidget {
                       'Uploaded By: ${data['fullName']}',
                       style: const TextStyle(
                         fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        color: Colors.white,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -122,6 +129,8 @@ class NearbyFoodCard extends StatelessWidget {
                       'Food Type: ${data['foodType']}',
                       style: const TextStyle(
                         fontSize: 14,
+                        color: Colors.white,
+                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -135,6 +144,8 @@ class NearbyFoodCard extends StatelessWidget {
                   'Uploaded: $uploadTime',
                   style: const TextStyle(
                     fontSize: 14,
+                    color: Colors.white,
+                    fontFamily: 'DM Sans',
                     fontWeight: FontWeight.w700,
                   ),
                   textAlign: TextAlign.center,
@@ -181,6 +192,8 @@ class NearbyFoodCard extends StatelessWidget {
             // Filter and sort food docs by location and verification status
             foodDocs = foodDocs.where((doc) {
               bool isVerified = doc.data()['verified'] ?? false;
+              bool isDailyActive = doc.data()['dailyActive'] ??
+                  true; // Check if dailyactive is true
               GeoPoint foodLocation = doc.data()['location'];
               double distance = Geolocator.distanceBetween(
                 userLocation.latitude,
@@ -188,7 +201,20 @@ class NearbyFoodCard extends StatelessWidget {
                 foodLocation.latitude,
                 foodLocation.longitude,
               );
-              return isVerified && distance <= 30000; // 30 km in meters
+
+              if (!isDailyActive) {
+                bool isFoodPast =
+                    isPast(doc.data()); // Check if the food item is past
+                return isVerified &&
+                    distance <= 30000 &&
+                    isFoodPast; // Show if not past and not dailyactive
+              } else {
+                bool isFoodPast =
+                    isPast(doc.data()); // Check if the food item is past
+                return isVerified &&
+                    distance <= 30000 &&
+                    !isFoodPast; // Show if dailyactive is true and past
+              }
             }).toList();
 
             return Column(
@@ -219,5 +245,20 @@ class NearbyFoodCard extends StatelessWidget {
         );
       },
     );
+  }
+
+// Function to check if the food item is past its expiration date
+  bool isPast(Map<String, dynamic> data) {
+    String toDateString = data['toDate'];
+    String toTimeString = data['toTime'];
+
+    // Parse to date and time
+    DateTime toDate =
+        DateFormat('yyyy-MM-dd hh:mm a').parse('$toDateString $toTimeString');
+
+    // Format the current date and time
+    DateTime currentDateTime = DateTime.now();
+
+    return toDate.isBefore(currentDateTime);
   }
 }
