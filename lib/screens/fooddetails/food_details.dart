@@ -8,7 +8,6 @@ class FoodDetailsScreen extends StatelessWidget {
 
   const FoodDetailsScreen({required this.data, Key? key}) : super(key: key);
 
-// Function to launch Google Maps with Directions
   Future<void> _launchMaps(String location) async {
     final Uri uri = Uri.parse(
       'https://www.google.com/maps/dir/?api=1&destination=$location',
@@ -26,46 +25,46 @@ class FoodDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Food Details:',
+        ),
+        backgroundColor: const Color(0xFFFF9F1C),
+        titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'Lora',
+            fontSize: 18,
+            fontWeight: FontWeight.w700),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Text(
-                  'Food Details:',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
             Padding(
-              padding: EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.all(0),
               child: Text(
                 '${data['venue'] ?? ''}',
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             const SizedBox(height: 20),
             Container(
-              width: 360,
+              width: MediaQuery.of(context).size.width,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 2,
+                    width: 1,
                     color: Colors.black.withOpacity(0.1),
                   ),
                   borderRadius: BorderRadius.circular(15),
@@ -143,6 +142,18 @@ class FoodDetailsScreen extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
+                  if (data['dailyActive'] ?? false)
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        'Availability: Daily',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -164,18 +175,19 @@ class FoodDetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        TableRow(
-                          children: [
-                            TableCell(
-                              child: _buildCell(
-                                  _formatDate('${data['date'] ?? ''}')),
-                            ),
-                            TableCell(
-                              child: _buildCell(
-                                  _formatDate('${data['toDate'] ?? ''}')),
-                            ),
-                          ],
-                        ),
+                        if (!(data['dailyActive'] ?? false))
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: _buildCell(
+                                    _formatDate('${data['date'] ?? ''}')),
+                              ),
+                              TableCell(
+                                child: _buildCell(
+                                    _formatDate('${data['toDate'] ?? ''}')),
+                              ),
+                            ],
+                          ),
                         TableRow(
                           children: [
                             TableCell(
@@ -192,10 +204,9 @@ class FoodDetailsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12),
                     child: ElevatedButton(
-                      onPressed: () =>
-                          _launchMaps(data['address']),
+                      onPressed: () => _launchMaps(data['address']),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
+                        backgroundColor: const Color(0xFFFF9F1C),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),

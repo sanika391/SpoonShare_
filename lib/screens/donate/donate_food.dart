@@ -9,10 +9,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/donate/thank_you.dart';
+import 'package:spoonshare/widgets/auto_complete.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
 import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:uuid/uuid.dart';
 
 class DonateFoodScreenContent extends StatefulWidget {
   const DonateFoodScreenContent({super.key});
@@ -32,27 +34,80 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
   final TextEditingController _foodquantityController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _toTimeController = TextEditingController();
-  final TextEditingController _mapcontroller = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
   File? _imageFile;
   String _selectedFoodType = '';
+  late double lat;
+  late double lng;
+  bool _addressSelected = false;
+
+  String tokenForSession = "12345";
+  List<Map<String, dynamic>> listForPlaces = [];
+  var uuid = const Uuid();
+
+  Future<void> makeSuggestions(String input) async {
+    try {
+      var suggestions = await PlaceApi.getSuggestions(input);
+      setState(() {
+        listForPlaces = suggestions;
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _addressController.addListener(onModify);
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  void onModify() {
+    if (tokenForSession.isEmpty) {
+      setState(() {
+        tokenForSession = uuid.v4();
+      });
+    }
+    makeSuggestions(_addressController.text);
+  }
+
+  Future<void> handleListItemTap(int index) async {
+    String placeId = listForPlaces[index]['place_id'];
+    var placeDetails = await PlaceApi.getPlaceDetails(placeId);
+    double selectedLat = placeDetails['geometry']['location']['lat'];
+    double selectedLng = placeDetails['geometry']['location']['lng'];
+    String selectedAddress = listForPlaces[index]['description'];
+    print(selectedAddress);
+    print(selectedLat);
+    print(selectedLng);
+
+    setState(() {
+      _addressController.text = selectedAddress;
+      lat =
+          selectedLat; // Update the class-level variables with the selected values
+      lng = selectedLng;
+      _addressSelected = true; // Set _addressSelected to true
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool showExpandedList =
+        _addressController.text.isNotEmpty && !_addressSelected;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 8),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            '* Fill below details to share food',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
+        const SizedBox(height: 16),
+        _buildImageUploadBox(),
+        const SizedBox(
+          height: 8,
         ),
         const SizedBox(height: 16),
         CustomTextField(
@@ -61,7 +116,37 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
         ),
         const SizedBox(height: 16),
         CustomTextField(
-            label: "Select Location on Map*", controller: _mapcontroller),
+            label: "Pickup Address*", controller: _addressController),
+        if (showExpandedList)
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: ListView.builder(
+              itemCount: listForPlaces.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: () async {
+                    _addressSelected = true;
+                    await handleListItemTap(index);
+                  },
+                  title: Text(
+                    listForPlaces[index]['description'],
+                  ),
+                );
+              },
+            ),
+          ),
         const SizedBox(height: 16),
         CustomTextField(
           label: 'Food Life*',
@@ -94,51 +179,69 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
         Row(
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Pickup Date*'),
-                  TextField(
-                    controller: _dateController,
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? selectedDate =
-                          await _selectDate(context, _dateController);
-                      if (selectedDate != null) {
-                        _dateController.text =
-                            selectedDate.toLocal().toString().split(' ')[0];
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Pickup Date*',
-                      border: OutlineInputBorder(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                child: TextFormField(
+                  controller: _dateController,
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? selectedDate =
+                        await _selectDate(context, _dateController);
+                    if (selectedDate != null) {
+                      _dateController.text =
+                          selectedDate.toLocal().toString().split(' ')[0];
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Pickup Date*',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFF9F1C),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFF9F1C),
+                      ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Pickup Time Till*'),
-                  TextField(
-                    controller: _toTimeController,
-                    readOnly: true,
-                    onTap: () async {
-                      TimeOfDay? selectedTime =
-                          await _selectTime(context, _toTimeController);
-                      if (selectedTime != null) {
-                        _toTimeController.text = selectedTime.format(context);
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Pickup Time*',
-                      border: OutlineInputBorder(),
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                child: TextFormField(
+                  controller: _toTimeController,
+                  readOnly: true,
+                  onTap: () async {
+                    TimeOfDay? selectedTime =
+                        await _selectTime(context, _toTimeController);
+                    if (selectedTime != null) {
+                      _toTimeController.text = selectedTime.format(context);
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Pickup Time Till*',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFF9F1C),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFFF9F1C),
+                      ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
@@ -304,9 +407,9 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
     return Container(
       width: screenWidth * 0.8667,
       height: screenHeight * 0.05625,
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: const Color(0xFFFF9F1C),
         borderRadius: BorderRadius.circular(50),
       ),
       child: InkWell(
@@ -334,6 +437,7 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
     if (_imageFile == null ||
         _selectedFoodType.isEmpty ||
         _pickuplocationController.text.isEmpty ||
+        _imageController.text.isEmpty ||
         _foodlifeController.text.isEmpty ||
         _fooddescriptionController.text.isEmpty ||
         _foodquantityController.text.isEmpty ||
@@ -357,12 +461,17 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
       String toTime = _toTimeController.text;
 
       // Upload the image to Firebase Storage
-
+      String imageurl = await uploadImageToFirebaseStorage(_imageFile, userId);
       // Create a map with food details, including a timestamp
+
+      GeoPoint location = GeoPoint(lat, lng);
+
       Map<String, dynamic> foodData = {
         'userId': userId,
         'fullName': fullName,
         'pickup': pickup,
+        'image': imageurl,
+        'location': location,
         'foodlife': foodlife,
         'fooddescription': fooddescription,
         'foodquantity': foodquantity,
@@ -404,18 +513,34 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
     return Container(
       width: double.infinity,
       height: 46,
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1.30,
-            color: Colors.black.withOpacity(0.6000000238418579),
-          ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: DropdownButton<String>(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: DropdownButtonFormField<String>(
+          value: _selectedFoodType.isNotEmpty ? _selectedFoodType : null,
+          hint: const Text('Food Type'),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Color(0xFFFF9F1C),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Color(0xFFFF9F1C),
+              ),
+            ),
+          ),
+          onChanged: (value) {
+            setState(() {
+              _selectedFoodType = value!;
+            });
+          },
           items: const [
             DropdownMenuItem<String>(
               value: 'veg',
@@ -430,15 +555,6 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
               child: Text('Both'),
             ),
           ],
-          onChanged: (value) {
-            setState(() {
-              _selectedFoodType = value!;
-            });
-          },
-          value: _selectedFoodType.isNotEmpty ? _selectedFoodType : null,
-          hint: const Text('Food Type'),
-          style: const TextStyle(color: Colors.black),
-          isExpanded: true,
         ),
       ),
     );
@@ -451,8 +567,7 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
     }
 
     try {
-      String fileName = 'food/shared_food/$venue.jpg';
-
+      String fileName = 'food/donate_food/$venue.jpg';
       firebase_storage.Reference storageReference =
           firebase_storage.FirebaseStorage.instance.ref().child(fileName);
 
@@ -465,5 +580,42 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
       print('Error uploading image to Firebase Storage: $e');
       throw Exception('Error uploading image to Firebase Storage');
     }
+  }
+}
+
+class DonateFoodScreen extends StatelessWidget {
+  const DonateFoodScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Donate Food'),
+          backgroundColor: const Color(0xFFFF9F1C),
+          titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'Lora',
+              fontSize: 18,
+              fontWeight: FontWeight.w700),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: Container(
+          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
+          child: const SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20),
+                DonateFoodScreenContent(),
+              ],
+            ),
+          ),
+        ));
   }
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/models/users/user.dart';
-import 'package:spoonshare/screens/chat/chat_page.dart';
+import 'package:spoonshare/screens/dashboard/dashboard_home.dart';
 import 'package:spoonshare/screens/donate/donate_page.dart';
 import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/screens/jobs/job_page.dart';
 import 'package:spoonshare/screens/profile/user_profile.dart';
-import 'package:spoonshare/widgets/maps_widget.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class BottomNavBar extends StatelessWidget {
     final String role = userProfile.getRole();
 
     return Container(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       height: 67,
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -31,19 +30,19 @@ class BottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(context, Icons.home, 'Home', Colors.black54,
+          _buildNavItem(context, Icons.home, 'Home', const Color(0xFFFF9F1C),
               Colors.black54, HomePage(name: name, role: role)),
-          _buildNavItem(context, Icons.map, 'Map', Colors.black54,
-              Colors.black54, MapsWidget()),
+          _buildNavItem(context, Icons.dashboard, 'Dashboard',
+              const Color(0xFFFF9F1C), Colors.black54, DashboardHomePage(role: role,)),
           _buildNavItem(context, Icons.add_circle, 'Donate Food',
-              Colors.black54, Colors.black54, const DonatePage()),
-          _buildNavItem(context, Icons.work, 'Jobs', Colors.black54,
+              Colors.black54, const Color(0xFFFF9F1C), const DonatePage()),
+          _buildNavItem(context, Icons.work, 'Jobs', const Color(0xFFFF9F1C),
               Colors.black54, const JobPage()),
           _buildNavItem(
               context,
               Icons.person,
               'Profile',
-              Colors.black54,
+              const Color(0xFFFF9F1C),
               Colors.black54,
               UserProfileScreen(
                 name: name,
@@ -92,7 +91,7 @@ class BottomNavBar extends StatelessWidget {
             Icon(
               icon,
               size: 26,
-              color: Colors.black,
+              color: const Color(0xFFFF9F1C),
             ),
             const SizedBox(height: 2),
             Text(

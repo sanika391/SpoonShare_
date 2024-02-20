@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spoonshare/screens/donate/donate_page.dart';
-import 'package:spoonshare/screens/volunteer/volunteer_screen.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
+import 'package:spoonshare/widgets/maps_widget.dart';
+import 'package:spoonshare/widgets/nearby_daily_card.dart';
 import 'package:spoonshare/widgets/nearby_food_cards.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,31 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentQuoteIndex = 0;
-  List<String> quotes = [
-    'Share a meal, spread joy, and make a difference today.',
-    'Nourishing hearts with kindness, one shared plate at a time.',
-    'In the banquet of life, everyone deserves a seat and feast.',
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _startChangingQuotes();
-  }
-
-  void _startChangingQuotes() {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (mounted) {
-        setState(() {
-          currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-        });
-        _startChangingQuotes();
-      }
-    });
-  }
-
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,17 +33,22 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi ${widget.name}',
+                        'Hello👋 ${widget.name}',
                         style: const TextStyle(
                           fontSize: 20,
+                          fontFamily: 'Lora',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         widget.role,
-                        style: const TextStyle(
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
                           fontSize: 16,
-                          color: Colors.grey,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                          letterSpacing: 1.68,
                         ),
                       ),
                     ],
@@ -94,13 +75,14 @@ class _HomePageState extends State<HomePage> {
                         width: 42,
                         height: 42,
                         decoration: ShapeDecoration(
-                          color: Colors.black.withOpacity(0.08),
+                          color: const Color(0xFFFF9F1C),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
                         child: IconButton(
                           icon: const Icon(Icons.notifications),
+                          color: Colors.white,
                           onPressed: () {},
                         ),
                       ),
@@ -108,13 +90,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
               Container(
-                width: 360,
+                width: MediaQuery.of(context).size.width,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
-                      width: 2,
+                      width: 1,
                       color: Colors.black.withOpacity(0.1),
                     ),
                     borderRadius:
@@ -123,179 +105,135 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Center(
-                child: SizedBox(
-                  width: 208,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: '“',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
-                            ),
-                            TextSpan(
-                              text: quotes[currentQuoteIndex],
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.8),
-                                fontSize: 16,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
-                            ),
-                            const TextSpan(
-                              text: '”',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 100,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFF009E48),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const DonatePage(),
-                                    ),
-                                  );
-                                },
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Donate Food',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              'OR',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.4),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              decoration: ShapeDecoration(
-                                color: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const VolunteerScreen(),
-                                    ),
-                                  );
-                                },
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Become Volunteer',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Near By Available Foods',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Column(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(height: 5),
-                  NearbyFoodCard(),
-                  SizedBox(height: 5),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 0; // Update selected index
+                      });
+                    },
+                    child: Text(
+                      'RECENTLY UPLOADED',
+                      style: TextStyle(
+                        color: selectedIndex == 0
+                            ? Colors.black
+                            : Colors.black.withOpacity(0.6),
+                        fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                        letterSpacing: 0.60,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 1; // Update selected index
+                      });
+                    },
+                    child: Text(
+                      'DAILY ACTIVE',
+                      style: TextStyle(
+                        color: selectedIndex == 1
+                            ? Colors.black
+                            : Colors.black.withOpacity(0.6),
+                        fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                        letterSpacing: 0.60,
+                      ),
+                    ),
+                  ),
                 ],
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 1, // Adjust the height of the line as needed
+                      color: selectedIndex == 0
+                          ? const Color(0xFFFF9F1C)
+                          : const Color(0x28FF9F1C),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 1, // Adjust the height of the line as needed
+                      color: selectedIndex == 1
+                          ? const Color.fromARGB(255, 201, 141, 58)
+                          : const Color(0x28FF9F1C),
+                    ),
+                  ),
+                ],
+              ),
+              Visibility(
+                visible: selectedIndex == 0,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    'Near By Available Foods',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: selectedIndex == 0,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 5),
+                    NearbyFoodCard(),
+                    SizedBox(height: 5),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: selectedIndex != 0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    Visibility(
+                      visible: selectedIndex == 1,
+                      child: const NearbyDailyFoodCard(
+                        dailyActive: true,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: const BottomNavBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MapsWidget()));
+        },
+        backgroundColor: const Color(0xFFFF9F1C),
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.location_on),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

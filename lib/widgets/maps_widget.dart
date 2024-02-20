@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' as Codec;
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,7 +17,6 @@ class MapsWidget extends StatefulWidget {
 
 class _MapsWidgetState extends State<MapsWidget> {
   late GoogleMapController mapController;
-  List<Marker> markers = [];
   location.LocationData? currentLocation;
   late BitmapDescriptor customMarkerIcon;
 
@@ -30,7 +27,6 @@ class _MapsWidgetState extends State<MapsWidget> {
     _requestLocationPermission();
   }
 
-// Function to request location permissions
   Future<void> _requestLocationPermission() async {
     var status = await Permission.location.request();
 
@@ -44,7 +40,6 @@ class _MapsWidgetState extends State<MapsWidget> {
     }
   }
 
-  // Function to get the current location
   Future<void> _getCurrentLocation() async {
     location.LocationData locationData =
         await location.Location().getLocation();
@@ -62,27 +57,29 @@ class _MapsWidgetState extends State<MapsWidget> {
     );
   }
 
-  // Function to load the custom marker icon
   Future<void> _loadCustomMarker() async {
-    // Load the custom marker icon from assets
     Uint8List markerIcon =
         await getBytesFromAsset('assets/images/marker_icon.png', 100);
     customMarkerIcon = BitmapDescriptor.fromBytes(markerIcon);
   }
 
-  void _initializeMap() {
-    FirebaseFirestore.instance
+  Future<List<Marker>> _initializeMap() async {
+    List<Marker> markers = [];
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('food')
         .doc('sharedfood')
         .collection('foodData')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        double lat = doc['lat'];
-        double lng = doc['lng'];
-        String venue = doc['venue'];
+        .get();
 
-        // Create a default info window
+    for (var doc in querySnapshot.docs) {
+      double lat = doc['location'].latitude;
+      double lng = doc['location'].longitude;
+      String venue = doc['venue'];
+      bool dailyActive = doc['dailyActive'] ?? false;
+      Timestamp timestamp = doc['timestamp'];
+
+      if (timestamp.toDate().isAfter(DateTime.now()) || dailyActive) {
         InfoWindow infoWindow = InfoWindow(
           title: venue,
           snippet: "click here for more details",
@@ -90,7 +87,6 @@ class _MapsWidgetState extends State<MapsWidget> {
               context, doc.data() as Map<String, dynamic>),
         );
 
-        // Create a marker with the default info window
         Marker marker = Marker(
           markerId: MarkerId('$lat,$lng'),
           position: LatLng(lat, lng),
@@ -98,16 +94,13 @@ class _MapsWidgetState extends State<MapsWidget> {
           icon: customMarkerIcon,
         );
 
-        // Add the marker to the markers list
         markers.add(marker);
-      });
+      }
+    }
 
-      // Update the UI to reflect the changes
-      setState(() {});
-    });
+    return markers;
   }
 
-  // Function to get bytes from asset
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     Codec.Codec codec = await Codec.instantiateImageCodec(
@@ -122,61 +115,57 @@ class _MapsWidgetState extends State<MapsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Map View Shared Food'),
+        backgroundColor: const Color(0xFFFF9F1C),
+        titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'Lora',
+            fontSize: 18,
+            fontWeight: Codec.FontWeight.w700),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: currentLocation != null
           ? Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Map View Shared Food',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 10)),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Container(
-                    width: double.infinity,
-                    decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2,
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 8),
                   Container(
                     width: MediaQuery.of(context).size.width - 16,
                     height: MediaQuery.of(context).size.height - 170,
-                    child: GoogleMap(
-                      onMapCreated: (GoogleMapController controller) {
-                        mapController = controller;
-                        _initializeMap();
+                    child: FutureBuilder<List<Marker>>(
+                      future: _initializeMap(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return GoogleMap(
+                            onMapCreated: (GoogleMapController controller) {
+                              mapController = controller;
+                            },
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                currentLocation!.latitude!,
+                                currentLocation!.longitude!,
+                              ),
+                              zoom: 12.0,
+                            ),
+                            markers: Set<Marker>.of(snapshot.data ?? []),
+                            myLocationEnabled: true,
+                          );
+                        }
                       },
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                          currentLocation!.latitude!,
-                          currentLocation!.longitude!,
-                        ),
-                        zoom: 12.0,
-                      ),
-                      markers: Set<Marker>.of(markers),
-                      myLocationEnabled:
-                          true, // Enable the "My Location" button
                     ),
                   ),
                 ],

@@ -21,7 +21,7 @@ class ThankYouScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/thankubg.png'),
             fit: BoxFit.cover,
@@ -41,7 +41,7 @@ class ThankYouScreen extends StatelessWidget {
                   // You can adjust width and height as needed
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 4),
                 child: Text(
                   'Thank you For Donating',
@@ -54,11 +54,11 @@ class ThankYouScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

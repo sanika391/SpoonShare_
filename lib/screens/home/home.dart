@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/onboarding.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             Future.delayed(Duration.zero, () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Onboarding()),
+                MaterialPageRoute(builder: (context) => const Onboarding()),
               );
             });
           }
@@ -34,6 +37,9 @@ class HomeScreen extends StatelessWidget {
                 )
               : Container();
         } else {
+          // Request location permissions
+          _requestLocationPermissions(context);
+
           return Scaffold(
             body: Center(
               child: Column(
@@ -102,5 +108,33 @@ class HomeScreen extends StatelessWidget {
         }
       },
     );
+  }
+
+  // Function to request location permissions
+  Future<void> _requestLocationPermissions(BuildContext context) async {
+    PermissionStatus permissionStatus = await Permission.location.request();
+    if (permissionStatus.isDenied) {
+      // Handle case where user denies location permissions
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Location Permission Required'),
+            content: const Text(
+                'This app requires access to your location in order to function properly.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => openAppSettings(),
+                child: const Text('Settings'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:spoonshare/screens/fooddetails/food_details.dart';
 
-class NearbyFoodCard extends StatelessWidget {
-  const NearbyFoodCard({Key? key});
+class NearbyDailyFoodCard extends StatelessWidget {
+  const NearbyDailyFoodCard({Key? key, this.dailyActive = false})
+      : super(key: key);
+  final bool dailyActive;
 
   Future<double> _calculateDistance(
       GeoPoint foodLocation, Position userLocation) async {
@@ -128,16 +130,27 @@ class NearbyFoodCard extends StatelessWidget {
                   ],
                 ),
               ),
+              const Divider(height: 0),
               Padding(
-                padding:
-                    const EdgeInsets.only(top: 4, left: 8, right: 8, bottom: 8),
-                child: Text(
-                  'Uploaded: $uploadTime',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  textAlign: TextAlign.center,
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Uploaded: $uploadTime',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      'Daily: ${data['dailyActive']}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -154,6 +167,7 @@ class NearbyFoodCard extends StatelessWidget {
           .collection('food')
           .doc('sharedfood')
           .collection('foodData')
+          .where('dailyActive', isEqualTo: dailyActive)
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -179,8 +193,35 @@ class NearbyFoodCard extends StatelessWidget {
             Position userLocation = positionSnapshot.data!;
 
             // Filter and sort food docs by location and verification status
+            foodDocs.sort((a, b) {
+              GeoPoint aLocation = a.data()['location'];
+              GeoPoint bLocation = b.data()['location'];
+              double distanceA = Geolocator.distanceBetween(
+                userLocation.latitude,
+                userLocation.longitude,
+                aLocation.latitude,
+                aLocation.longitude,
+              );
+              double distanceB = Geolocator.distanceBetween(
+                userLocation.latitude,
+                userLocation.longitude,
+                bLocation.latitude,
+                bLocation.longitude,
+              );
+              bool isVerifiedA = a.data()['verified'] ?? false;
+              bool isVerifiedB = b.data()['verified'] ?? false;
+
+              // Sort by verification status first
+              if (isVerifiedA != isVerifiedB) {
+                return isVerifiedB ? 1 : -1; // Verified items come first
+              } else {
+                // If verification status is the same, sort by distance
+                return distanceA.compareTo(distanceB);
+              }
+            });
+
+            // Filter out documents beyond 30 km
             foodDocs = foodDocs.where((doc) {
-              bool isVerified = doc.data()['verified'] ?? false;
               GeoPoint foodLocation = doc.data()['location'];
               double distance = Geolocator.distanceBetween(
                 userLocation.latitude,
@@ -188,7 +229,7 @@ class NearbyFoodCard extends StatelessWidget {
                 foodLocation.latitude,
                 foodLocation.longitude,
               );
-              return isVerified && distance <= 30000; // 30 km in meters
+              return distance <= 30000; // 30 km in meters
             }).toList();
 
             return Column(

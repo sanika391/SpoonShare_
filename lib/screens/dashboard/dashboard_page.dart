@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:spoonshare/screens/donate/donate_food.dart';
-import 'package:spoonshare/screens/donate/share_food.dart';
+import 'package:spoonshare/screens/ngo/ngo_form.dart';
+import 'package:spoonshare/screens/ngo/ngo_home.dart';
+import 'package:spoonshare/screens/volunteer/volunteer_form.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 
-class DonatePage extends StatefulWidget {
-  const DonatePage({Key? key}) : super(key: key);
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
-  _DonatePageState createState() => _DonatePageState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DonatePageState extends State<DonatePage> {
+class _DashboardPageState extends State<DashboardPage> {
   bool isShareFoodSelected = true;
   bool isDonateFoodSelected = false;
 
@@ -68,7 +69,7 @@ class _DonatePageState extends State<DonatePage> {
               ),
               const SizedBox(height: 32),
               SizedBox(
-                width: 275,
+                width: 300,
                 height: 69,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -76,7 +77,7 @@ class _DonatePageState extends State<DonatePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      '“Join Spoon Share”',
+                      '“Join Spoon Share Family”',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 24,
@@ -89,7 +90,7 @@ class _DonatePageState extends State<DonatePage> {
                     SizedBox(
                       width: 275,
                       child: Text(
-                        'Explore nearby food or join us to make a difference!',
+                        'Volunteer with a Smile, Empower with Heart!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.800000011920929),
@@ -120,8 +121,7 @@ class _DonatePageState extends State<DonatePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const ShareFoodScreen(), // Replace ShareFoodPage() with the actual class for your Share Food content page
+                                builder: (context) => const VolunteerFormScreen(),
                               ),
                             );
                           },
@@ -137,12 +137,12 @@ class _DonatePageState extends State<DonatePage> {
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
                                   child: Image.asset(
-                                      "assets/images/share_food.png"),
+                                      "assets/images/volunteer.png"),
                                 ),
                               ),
                               const SizedBox(height: 8),
                               const Text(
-                                'Share Free Food',
+                                'Become a Volunteer',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -160,8 +160,7 @@ class _DonatePageState extends State<DonatePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const DonateFoodScreen(), // Replace DonateFoodPage() with the actual class for your Donate Food content page
+                                builder: (context) => const NGOFormScreen(),
                               ),
                             );
                           },
@@ -176,13 +175,12 @@ class _DonatePageState extends State<DonatePage> {
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
-                                  child: Image.asset(
-                                      "assets/images/donate_food.png"),
+                                  child: Image.asset("assets/images/ngo.png"),
                                 ),
                               ),
                               const SizedBox(height: 8),
                               const Text(
-                                'Donate Food',
+                                'Join us as NGO',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -206,7 +204,7 @@ class _DonatePageState extends State<DonatePage> {
                 height: 300,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/girlthinking.png"),
+                    image: AssetImage("assets/images/dashboard.png"),
                     fit: BoxFit.fill,
                   ),
                 ),
