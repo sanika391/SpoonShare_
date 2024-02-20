@@ -88,7 +88,7 @@ class NearbyDailyFoodCard extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(width: 8), // Add some spacing here
+                        const SizedBox(width: 8), 
                         if (isNGOVerified)
                           const Icon(Icons.verified,
                               color: Colors.green, size: 16),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/maps_widget.dart';
-import 'package:spoonshare/widgets/foodcards/nearby_daily_card.dart';
+import 'package:spoonshare/widgets/foodcards/nearby_daily_cards.dart';
 import 'package:spoonshare/widgets/foodcards/nearby_food_cards.dart';
-import 'package:spoonshare/widgets/foodcards/past_free_food.dart';
+import 'package:spoonshare/widgets/foodcards/pastfood_cardsart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.name, required this.role})

@@ -1,8 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
+import 'package:spoonshare/widgets/snackbar.dart';
 
 class NGOHomeScreen extends StatefulWidget {
   const NGOHomeScreen({Key? key}) : super(key: key);
@@ -34,10 +36,9 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
         if (!isVerified) {
           await fetchNGOData(organization!);
         }
-        print('organization: $organization');
       }
     } catch (e) {
-      print('Error fetching organization: $e');
+      showErrorSnackbar(context, 'Error fetching organization: $e');
     } finally {
       setState(() {
         isLoading = false;
@@ -57,7 +58,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
         isVerified = querySnapshot.docs.first['verified'] ?? false;
       }
     } catch (e) {
-      print('Error checking verification status: $e');
+      showErrorSnackbar(context, "Error checking verification status: $e");
     }
   }
 
@@ -72,9 +73,8 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
       if (querySnapshot.docs.isNotEmpty) {
         ngoData = querySnapshot.docs.first.data();
       }
-      print(ngoData);
     } catch (e) {
-      print('Error fetching NGO data: $e');
+      showErrorSnackbar(context, "Error fetching NGO data: $e");
     }
   }
 
@@ -123,7 +123,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
                             Container(
                               width: 42,
                               height: 42,
-                              decoration:  ShapeDecoration(
+                              decoration: ShapeDecoration(
                                 color: Colors.black.withOpacity(0.08),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
@@ -138,8 +138,8 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
                             Container(
                               width: 42,
                               height: 42,
-                              decoration:  ShapeDecoration(
-                                color: Color(0xFFFF9F1C),
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFFFF9F1C),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
@@ -163,8 +163,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen> {
                             width: 1,
                             color: Colors.black12,
                           ),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                       ),
                     ),

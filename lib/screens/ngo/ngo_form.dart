@@ -20,10 +20,10 @@ class NGOFormScreen extends StatefulWidget {
   const NGOFormScreen({Key? key}) : super(key: key);
 
   @override
-  _NGOFormScreenState createState() => _NGOFormScreenState();
+  NGOFormScreenState createState() => NGOFormScreenState();
 }
 
-class _NGOFormScreenState extends State<NGOFormScreen> {
+class NGOFormScreenState extends State<NGOFormScreen> {
   final TextEditingController _ngoNameController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -58,7 +58,7 @@ class _NGOFormScreenState extends State<NGOFormScreen> {
   File? _imageFile;
   late double lat;
   late double lng;
-  bool _addressSelected = false;
+  // final bool _addressSelected = false;
 
   bool _validateFields() {
     return _ngoNameController.text.isNotEmpty &&
@@ -354,7 +354,9 @@ class _NGOFormScreenState extends State<NGOFormScreen> {
         },
       );
     } else {
-      print('Storage or camera permission denied');
+      const Center(
+        child: Text("Storage or camera permission denied"),
+      );
     }
   }
 
@@ -388,7 +390,10 @@ class _NGOFormScreenState extends State<NGOFormScreen> {
 
       return downloadURL;
     } catch (e) {
-      print('Error uploading image to Firebase Storage: $e');
+      showErrorSnackbar(
+        context,
+        'Error uploading image to Firebase Storage',
+      );
       throw Exception('Error uploading image to Firebase Storage');
     }
   }

@@ -143,11 +143,11 @@ class FoodDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   if (data['dailyActive'] ?? false)
-                    Padding(
-                      padding: const EdgeInsets.all(12),
+                    const Padding(
+                      padding: EdgeInsets.all(12),
                       child: Text(
                         'Availability: Daily',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.green,

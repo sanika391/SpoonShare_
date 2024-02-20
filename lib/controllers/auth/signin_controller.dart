@@ -112,8 +112,7 @@ Future<void> _loadAndSaveUserLocally(User user) async {
       throw Exception("User document does not exist");
     }
   } catch (e) {
-    print("Error loading user profile: $e");
-  }
+    throw Exception("Error loading user data from Firestore: $e");}
 }
 
   Future<void> _saveUserLocally(
