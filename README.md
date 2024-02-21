@@ -120,9 +120,9 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
 - **Web (HTML, CSS, JS):** Standard web technologies for UI.
 - **Google Maps:** Web mapping service for interactive maps.
 - **Google API:** Collection of APIs for diverse services.
-- **Google Analytics:** Tracks and reports website/app traffic.
 - **Google Sign-In:** Authentication using Google credentials.
-- **Google Speech API:** Integrates speech recognition capabilities.
+- **Google Map Places API:** For address auto-complete and showing location on map.
+
 
 # SpoonShare Project Implementation Overview
 
