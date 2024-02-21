@@ -40,10 +40,27 @@ flutter run
 - [Flutter Docs](https://docs.flutter.dev/)
 - [Figma](https://help.figma.com/hc/en-us)
 - [Firebase Docs](https://firebase.google.com/docs)
+  
+![Screenshot_1708508489]()
+![Screenshot_1708508493]()
 
 # Screenshots
 <pre>
-<img src="https://i.postimg.cc/zvNsC3YQ/Whats-App-Image-2024-01-21-at-11-51-30-PM.jpg" width="250"> <img src="https://i.postimg.cc/prBgqx2L/Whats-App-Image-2024-01-21-at-11-52-56-PM.jpg" width="250"> <img src="https://i.postimg.cc/dtsMD7Bk/Whats-App-Image-2024-01-21-at-11-53-15-PM.jpg"  width="250"> <img src="https://i.postimg.cc/nVYbHKvf/Whats-App-Image-2024-01-21-at-11-53-28-PM.jpg" width="250"> <img src="https://i.postimg.cc/Cx8YyRsR/photo-2024-01-22-00-07-02.jpg" width="250"> <img src="https://i.postimg.cc/SNdgV0cx/Screenshot-1705918832.png" width="250" <img src="https://i.postimg.cc/W1FyC08Z/photo-2024-01-21-23-46-35.jpg" width="250"> <img src="https://i.postimg.cc/HxbG8XR5/Whats-App-Image-2024-01-21-at-11-54-05-PM.jpg" width="250">  <img src="https://i.postimg.cc/HsLR0q7B/photo-2024-01-21-23-46-40.jpg" width="250"> 
+<img src="https://github.com/shuence/SpoonShare/assets/65482186/a9f9423f-6843-445d-8233-4be9e731cbe4" width="250"> <img
+src="https://github.com/shuence/SpoonShare/assets/65482186/e171eb6c-41d5-4d54-a254-c61838fc18e5" width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/b6560714-09a7-4673-aeb1-c9ed7e59d1c0"  width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/15307620-b76f-4423-a2fc-ac6a08e91abe" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/840be77d-0420-4647-b9d9-ab2c47c602f7" width="250">
+<img src="https://github.com/shuence/SpoonShare/assets/65482186/8ff0b600-2bfc-4ebd-bd90-299b5a07b2f8" width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/d1bc11d6-e72e-497a-9b27-32c4c1962836" width="250"> <img
+src="https://github.com/shuence/SpoonShare/assets/65482186/70cd7833-fce3-438a-a71b-967c06fe8035" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/f45e4157-969c-4f73-b048-f5cd6df87f71" width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/8d4585f0-09ac-41a1-be2f-d6e93d4ed592" width="250"> 
+<img src="https://github.com/shuence/SpoonShare/assets/65482186/ba41649b-6726-44fb-a6e0-96781f63e2b1" width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/be11e412-6fa8-48a6-a8ce-5b7d1b7a8fd6" width="250"> <img
+src="https://github.com/shuence/SpoonShare/assets/65482186/7c65f0db-8744-43d4-b7a6-13d9ef60ee3e" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/a3d8c217-379c-4f8b-bf17-51b45f8bd4bb" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/ed3f38a2-b663-4df0-8762-07fc1440a21b" width="250"> 
+<img src="https://github.com/shuence/SpoonShare/assets/65482186/8e463244-f8b9-4b03-8c7a-a9d028d2a549" width="250"> <img
+src="https://github.com/shuence/SpoonShare/assets/65482186/122679cf-0f07-4344-b65a-dcc473e2dd21" width="250"> <img 
+src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a54a-0b58fbc9e605" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/c6cc77a5-232e-4626-a4cb-f6af9229ab81" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/8a3089ef-5144-4089-93fb-20cb9f7279c5" width="250"> 
+<img src="https://github.com/shuence/SpoonShare/assets/65482186/a0ff1d91-e9f7-4768-a91d-24f8d510962a" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/ba441ec8-78ec-43d5-8829-a3b8273370c5" width="250"> 
 </pre>
 # SpoonShare Features
 
