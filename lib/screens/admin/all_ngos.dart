@@ -135,7 +135,7 @@ class ngoDetailsPage extends StatelessWidget {
     Object? ngoData = ngoDoc.data();
     return Scaffold(
       appBar: AppBar(
-        title: Text((ngoData as Map?)?['fullName'] ?? 'No Venue'),
+        title: Text((ngoData as Map?)?['ngoName'] ?? 'No Venue'),
         backgroundColor: const Color(0xFFFF9F1C),
         titleTextStyle: const TextStyle(
             color: Colors.white,
@@ -247,7 +247,7 @@ class ngoDetailsPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () => _deletengo(ngoDoc, context),
-                        child: const Text('Remove Volunteer'),
+                        child: const Text('Remove NGO'),
                       ),
                     ],
                   ),

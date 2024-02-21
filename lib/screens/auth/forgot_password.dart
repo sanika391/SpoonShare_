@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/auth/signin.dart';
 import 'package:spoonshare/services/forgot_password.dart';
+import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 
@@ -40,6 +43,23 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Forgot Password'),
+        backgroundColor: const Color(0xFFFF9F1C),
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontFamily: 'DM Sans',
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width - 40,
@@ -174,6 +194,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
