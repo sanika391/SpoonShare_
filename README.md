@@ -25,9 +25,8 @@ Join us in the mission to minimize food waste, foster community engagement, and 
 
 ## Intro To SpoonShare Video
 
-[![Intro To SpoonShare](https://github.com/shuence/SpoonShare/assets/65482186/499f16d8-d481-4c7e-822b-7595897cac2f)
-](https://www.youtube.com/watch?v=IKbxF7SYE3Q&ab_channel=SanikaChavan)
-
+[![Intro To SpoonShare](https://github.com/shuence/SpoonShare/assets/65482186/927266f1-8703-4dac-9bb6-922e5844458e)
+](https://www.youtube.com/watch?v=D-5eatCAxwU&ab_channel=Shuence)
 
 
 Short but detailed introduction to SpoonShare. Click on the image above to watch the video.
