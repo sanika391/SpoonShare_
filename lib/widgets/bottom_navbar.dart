@@ -42,9 +42,9 @@ class BottomNavBar extends StatelessWidget {
                 role: role,
               )),
           _buildNavItem(context, Icons.add_circle, 'Donate Food',
-              Colors.black54, const Color(0xFFFF9F1C), const DonatePage()),
+              const Color(0xFFFF9F1C), Colors.black54, const DonatePage()),
           _buildNavItem(context, Icons.recycling, 'Recycle',
-              const Color(0xFFFF9F1C), Colors.black54, const RecycleScreen()),
+              const Color(0xFF06D801), Colors.black54, const RecycleScreen()),
           _buildNavItem(
               context,
               Icons.person,
@@ -98,13 +98,15 @@ class BottomNavBar extends StatelessWidget {
             Icon(
               icon,
               size: 26,
-              color: const Color(0xFFFF9F1C),
+              color: isSelected ? Colors.black54 : iconColor,
             ),
             const SizedBox(height: 2),
             Text(
               label,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: isSelected
+                    ? Colors.orange
+                    : textColor,
                 fontSize: 12,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w700,

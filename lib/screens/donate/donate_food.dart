@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/donate/thank_you.dart';
 import 'package:spoonshare/widgets/auto_complete.dart';
+import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
 import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
@@ -619,6 +620,8 @@ class DonateFoodScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        ),
+              bottomNavigationBar: const BottomNavBar(),
+);
   }
 }

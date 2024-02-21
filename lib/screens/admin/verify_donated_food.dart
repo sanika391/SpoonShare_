@@ -79,17 +79,6 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
                 );
               }
               var foodDocs = snapshot.data!.docs;
-              // Filter and sort food docs by location and verification status
-              foodDocs = foodDocs.where((doc) {
-                GeoPoint foodLocation = doc['location'];
-                double distance = Geolocator.distanceBetween(
-                  userLocation.latitude,
-                  userLocation.longitude,
-                  foodLocation.latitude,
-                  foodLocation.longitude,
-                );
-                return distance <= 30000;
-              }).toList();
 
               // Sort the food documents based on distance
               foodDocs.sort((a, b) {

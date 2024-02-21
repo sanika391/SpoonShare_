@@ -158,7 +158,7 @@ class RecycleScreen extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => const PickupFoodScreen(),
+                            builder: (BuildContext context) => const RecycleFoodScreen(),
                           ),
                         );
                       },

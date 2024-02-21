@@ -199,8 +199,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         height: 30,
                       ),
                       Container(
-                        padding: const EdgeInsets.all(12),
-                        width: 325,
+                        padding: const EdgeInsets.all(10),
+                        width: 350,
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 1,
@@ -392,23 +392,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                                 child: const Text('Submit'),
                               ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const VolunteerFormScreen(),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.black,
+                            if (widget.role == 'Individual')
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const VolunteerFormScreen(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.black,
+                                ),
+                                child: const Text('Become A Volunteer'),
                               ),
-                              child: const Text('Become A Volunteer'),
-                            ),
                           ],
                         ),
                       ),

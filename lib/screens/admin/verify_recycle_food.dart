@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 
-class VerifyDonatedFood extends StatefulWidget {
-  const VerifyDonatedFood({Key? key}) : super(key: key);
+class VerifyRecycleFood extends StatefulWidget {
+  const VerifyRecycleFood({Key? key}) : super(key: key);
 
   @override
-  _VerifyDonatedFoodState createState() => _VerifyDonatedFoodState();
+  _VerifyRecycleFoodState createState() => _VerifyRecycleFoodState();
 }
 
-class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
+class _VerifyRecycleFoodState extends State<VerifyRecycleFood> {
   late Stream<QuerySnapshot> _foodStream;
 
   @override
@@ -27,7 +27,7 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
   void _initializeFoodStream() {
     _foodStream = FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('recyclefood')
         .collection('foodData')
         .where('verified', isEqualTo: false)
         .orderBy('timestamp', descending: true)
@@ -38,7 +38,7 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Verify Donated Food'),
+        title: const Text('Verify Recycle Food'),
         backgroundColor: const Color(0xFFFF9F1C),
         titleTextStyle: const TextStyle(
             color: Colors.white,
@@ -376,7 +376,7 @@ Future<void> _verifyFood(DocumentSnapshot foodDoc, BuildContext context) async {
   try {
     await FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('recyclefood')
         .collection('foodData')
         .doc(foodDoc.id)
         .update({'verified': true});
@@ -392,7 +392,7 @@ Future<void> _deleteFood(DocumentSnapshot foodDoc, BuildContext context) async {
   try {
     await FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('recyclefood')
         .collection('foodData')
         .doc(foodDoc.id)
         .delete();

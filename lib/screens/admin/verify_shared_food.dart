@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,14 +6,14 @@ import 'package:intl/intl.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 
-class VerifyDonatedFood extends StatefulWidget {
-  const VerifyDonatedFood({Key? key}) : super(key: key);
+class VerifySharedFood extends StatefulWidget {
+  const VerifySharedFood({Key? key}) : super(key: key);
 
   @override
-  _VerifyDonatedFoodState createState() => _VerifyDonatedFoodState();
+  _VerifySharedFoodState createState() => _VerifySharedFoodState();
 }
 
-class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
+class _VerifySharedFoodState extends State<VerifySharedFood> {
   late Stream<QuerySnapshot> _foodStream;
 
   @override
@@ -27,10 +26,9 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
   void _initializeFoodStream() {
     _foodStream = FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('sharedfood')
         .collection('foodData')
         .where('verified', isEqualTo: false)
-        .orderBy('timestamp', descending: true)
         .snapshots();
   }
 
@@ -38,7 +36,7 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Verify Donated Food'),
+        title: const Text('Verify Shared Free Food'),
         backgroundColor: const Color(0xFFFF9F1C),
         titleTextStyle: const TextStyle(
             color: Colors.white,
@@ -79,18 +77,7 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
                 );
               }
               var foodDocs = snapshot.data!.docs;
-              // Filter and sort food docs by location and verification status
-              foodDocs = foodDocs.where((doc) {
-                GeoPoint foodLocation = doc['location'];
-                double distance = Geolocator.distanceBetween(
-                  userLocation.latitude,
-                  userLocation.longitude,
-                  foodLocation.latitude,
-                  foodLocation.longitude,
-                );
-                return distance <= 30000;
-              }).toList();
-
+     
               // Sort the food documents based on distance
               foodDocs.sort((a, b) {
                 GeoPoint foodALocation = a['location'];
@@ -137,12 +124,12 @@ class _VerifyDonatedFoodState extends State<VerifyDonatedFood> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(16.0),
                         leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage((foodData as Map?)?['image'] ?? ''),
+                          backgroundImage: NetworkImage(
+                              (foodData as Map?)?['imageUrl'] ?? ''),
                           radius: 30,
                         ),
                         title: Text(
-                          (foodData)?['pickup'] ?? 'No Venue',
+                          (foodData)?['venue'] ?? 'No Venue',
                           style: const TextStyle(
                             fontSize: 18,
                             fontFamily: 'DM Sans',
@@ -190,7 +177,7 @@ class FoodDetailsPage extends StatelessWidget {
     Object? foodData = foodDoc.data();
     return Scaffold(
       appBar: AppBar(
-        title: Text((foodData as Map?)?['pickup'] ?? 'No Venue'),
+        title: Text((foodData as Map?)?['venue'] ?? 'No Venue'),
         backgroundColor: const Color(0xFFFF9F1C),
         titleTextStyle: const TextStyle(
             color: Colors.white,
@@ -231,7 +218,7 @@ class FoodDetailsPage extends StatelessWidget {
                       Radius.circular(50),
                     )),
                     child: Image.network(
-                      foodData!['image'] ?? '',
+                      foodData!['imageUrl'] ?? '',
                       height: 250,
                       width: 400,
                       fit: BoxFit.cover,
@@ -241,7 +228,7 @@ class FoodDetailsPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: Text(
-                      'Pickup: ${foodData['pickup'] ?? ''}',
+                      'Venue: ${foodData['venue'] ?? ''}',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -268,23 +255,7 @@ class FoodDetailsPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: Text(
-                      'Food life: ${foodData['foodlife'] ?? ''}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Text(
-                      'Food Quantity: ${foodData['foodquantity'] ?? ''}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Text(
-                      'food Description: ${foodData['fooddescription'] ?? ''}',
+                      'Community: ${foodData['community'] ?? ''}',
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
@@ -296,6 +267,18 @@ class FoodDetailsPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
+                  if (foodData['dailyActive'] ?? false)
+                    const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Text(
+                        'Availability: Daily',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -317,15 +300,26 @@ class FoodDetailsPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        if (!(foodData['dailyActive'] ?? false))
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: _buildCell(
+                                    _formatDate('${foodData['date'] ?? ''}')),
+                              ),
+                              TableCell(
+                                child: _buildCell(
+                                    _formatDate('${foodData['toDate'] ?? ''}')),
+                              ),
+                            ],
+                          ),
                         TableRow(
                           children: [
                             TableCell(
-                              child: _buildCell(
-                                  _formatDate('${foodData['date'] ?? ''}')),
+                              child: _buildCell('${foodData['time'] ?? ''}'),
                             ),
                             TableCell(
-                              child:
-                                  _buildCell(('${foodData['toTime'] ?? ''}')),
+                              child: _buildCell('${foodData['toTime'] ?? ''}'),
                             ),
                           ],
                         ),
@@ -376,7 +370,7 @@ Future<void> _verifyFood(DocumentSnapshot foodDoc, BuildContext context) async {
   try {
     await FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('sharedfood')
         .collection('foodData')
         .doc(foodDoc.id)
         .update({'verified': true});
@@ -392,7 +386,7 @@ Future<void> _deleteFood(DocumentSnapshot foodDoc, BuildContext context) async {
   try {
     await FirebaseFirestore.instance
         .collection('food')
-        .doc('donatefood')
+        .doc('sharedfood')
         .collection('foodData')
         .doc(foodDoc.id)
         .delete();
