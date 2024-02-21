@@ -194,7 +194,6 @@ class ForgotPasswordScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
