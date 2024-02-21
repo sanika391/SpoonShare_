@@ -40,10 +40,7 @@ flutter run
 - [Flutter Docs](https://docs.flutter.dev/)
 - [Figma](https://help.figma.com/hc/en-us)
 - [Firebase Docs](https://firebase.google.com/docs)
-  
-![Screenshot_1708508489]()
-![Screenshot_1708508493]()
-
+- 
 # Screenshots
 <pre>
 <img src="https://github.com/shuence/SpoonShare/assets/65482186/a9f9423f-6843-445d-8233-4be9e731cbe4" width="250"> <img
