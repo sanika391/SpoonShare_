@@ -4,13 +4,22 @@
 
 A **Google Solution Challenge Project'24** Organised By Google Developer Student Clubs Project by **Team Innovision Squad From Deogiri Institute of Engineering And Management Studies Chh. Sambhajinagar.**
 
-##
+**Exciting News!**
+We are thrilled to announce that SpoonShare has been selected for the regional bootcamp at **Vidyalankar Institute of Technology, Mumbai**!
+[Check out the announcement on LinkedIn](https://www.linkedin.com/posts/shuence_spoonshare-regionalbootcamp-mumbai-activity-7162722028817530882-f9iL?utm_source=share&utm_medium=member_desktop)
 
 ## Live Preview
 
-Here you can view the deployed version
-[SpoonShare](https://spoonshare-meals.web.app/)
+**Download the APK:**
 
+- [SpoonShare APK](https://github.com/shuence/SpoonShare/releases/download/v.1.1.0/SpoonShare.apk)
+
+**Experience SpoonShare firsthand by visiting the deployed version:**
+
+- [SpoonShare](https://spoonshare-meals.web.app/)
+
+
+Join us in the mission to minimize food waste, foster community engagement, and make a positive impact on the world!
 
 # SpoonShare Project
 
