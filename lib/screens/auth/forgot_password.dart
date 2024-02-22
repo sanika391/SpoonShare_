@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/auth/signin.dart';
 import 'package:spoonshare/services/forgot_password.dart';
-import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 
