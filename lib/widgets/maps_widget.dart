@@ -144,7 +144,7 @@ class _MapsWidgetState extends State<MapsWidget> {
     for (var doc in ngoSnapshot.docs) {
       double lat = doc['location'].latitude;
       double lng = doc['location'].longitude;
-      String name = doc['name'];
+      String name = doc['ngoName'];
 
       InfoWindow infoWindow = InfoWindow(
         title: name,

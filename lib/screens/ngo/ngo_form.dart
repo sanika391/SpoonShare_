@@ -27,6 +27,7 @@ class NGOFormScreen extends StatefulWidget {
 
 class NGOFormScreenState extends State<NGOFormScreen> {
   final TextEditingController _ngoNameController = TextEditingController();
+  final TextEditingController _ngoNoController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _decripationController = TextEditingController();
@@ -113,6 +114,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
 
   bool _validateFields() {
     return _ngoNameController.text.isNotEmpty &&
+        _ngoNoController.text.isNotEmpty &&
         _mobileNoController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _selectedType != null &&
@@ -154,6 +156,11 @@ class NGOFormScreenState extends State<NGOFormScreen> {
             CustomTextField(
               label: 'NGO Name*',
               controller: _ngoNameController,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'NGO No*',
+              controller: _ngoNoController,
             ),
             const SizedBox(height: 16),
             CustomTextField(
@@ -392,7 +399,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
       status = await [
         Permission.storage,
         Permission
-            .camera, // Request camera permission for devices with SDK <= 32
+            .camera, 
       ].request();
     } else {
       status = await [
@@ -494,6 +501,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
 
         await FirebaseFirestore.instance.collection('ngos').add({
           'ngoName': _ngoNameController.text,
+          'ngoNo': _ngoNoController.text,
           'mobileNo': _mobileNoController.text,
           'email': _emailController.text,
           'ngoImage': imageUrl,
