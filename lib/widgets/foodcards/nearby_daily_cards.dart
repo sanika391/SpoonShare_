@@ -80,12 +80,15 @@ class NearbyDailyFoodCard extends StatelessWidget {
                       children: [
                         const Icon(Icons.location_on, size: 16),
                         const SizedBox(width: 4),
-                        Text(
-                          data['venue'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
+                          Flexible(
+                          child: Text(
+                            data['venue'],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         const SizedBox(width: 8),

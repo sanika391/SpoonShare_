@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui' as Codec;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart' as location;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:spoonshare/screens/admin/all_ngos.dart';
 import 'package:spoonshare/screens/fooddetails/food_details.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 
@@ -20,6 +20,7 @@ class _MapsWidgetState extends State<MapsWidget> {
   late GoogleMapController mapController;
   location.LocationData? currentLocation;
   late BitmapDescriptor customMarkerIcon;
+  late BitmapDescriptor customNgoMarkerIcon;
 
   @override
   void initState() {
@@ -58,27 +59,41 @@ class _MapsWidgetState extends State<MapsWidget> {
     );
   }
 
+  void _navigateToNgoDetails(BuildContext context, QueryDocumentSnapshot data) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ngoDetailsPage(ngoDoc: data),
+      ),
+    );
+  }
+
   Future<void> _loadCustomMarker() async {
     Uint8List markerIcon =
         await getBytesFromAsset('assets/images/marker_icon.png', 100);
     customMarkerIcon = BitmapDescriptor.fromBytes(markerIcon);
+
+    // Load a different marker for NGOs
+    Uint8List ngoMarkerIcon =
+        await getBytesFromAsset('assets/images/ngo.png', 100);
+    customNgoMarkerIcon = BitmapDescriptor.fromBytes(ngoMarkerIcon);
   }
 
   Future<List<Marker>> _initializeMap() async {
     List<Marker> markers = [];
 
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    // Add markers for shared food
+    QuerySnapshot sharedFoodSnapshot = await FirebaseFirestore.instance
         .collection('food')
         .doc('sharedfood')
         .collection('foodData')
         .get();
 
-    for (var doc in querySnapshot.docs) {
+    for (var doc in sharedFoodSnapshot.docs) {
       double lat = doc['location'].latitude;
       double lng = doc['location'].longitude;
       String venue = doc['venue'];
       bool dailyActive = doc['dailyActive'] ?? true;
-
       bool isVerified = doc['verified'] ?? true;
 
       if (!dailyActive) {
@@ -115,10 +130,38 @@ class _MapsWidgetState extends State<MapsWidget> {
             infoWindow: infoWindow,
             icon: customMarkerIcon,
           );
-
           markers.add(marker);
         }
       }
+    }
+
+    // Add markers for NGOs
+    QuerySnapshot ngoSnapshot = await FirebaseFirestore.instance
+        .collection('ngos')
+        .where('verified', isEqualTo: true)
+        .get();
+
+    for (var doc in ngoSnapshot.docs) {
+      double lat = doc['location'].latitude;
+      double lng = doc['location'].longitude;
+      String name = doc['name'];
+
+      InfoWindow infoWindow = InfoWindow(
+        title: name,
+        snippet: "NGO location",
+        onTap: () {
+          _navigateToNgoDetails(context, doc);
+        },
+      );
+
+      Marker marker = Marker(
+        markerId: MarkerId('$lat,$lng'),
+        position: LatLng(lat, lng),
+        infoWindow: infoWindow,
+        icon: customNgoMarkerIcon,
+      );
+
+      markers.add(marker);
     }
 
     return markers;

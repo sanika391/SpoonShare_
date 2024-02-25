@@ -78,13 +78,16 @@ class NearbyFoodCard extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.location_on, size: 16),
-                        const SizedBox(width: 4),
-                        Text(
-                          data['venue'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
+                        const SizedBox(height: 6),
+                        Flexible(
+                          child: Text(
+                            data['venue'],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         const SizedBox(width: 8), // Add some spacing here
@@ -239,27 +242,26 @@ class NearbyFoodCard extends StatelessWidget {
   }
 
 // Function to check if the food item is past its expiration date
-bool isPast(Map<String, dynamic> data) {
-  String toDateString = data['toDate']?.trim() ?? '';
-  String toTimeString = data['toTime']?.trim() ?? '';
+  bool isPast(Map<String, dynamic> data) {
+    String toDateString = data['toDate']?.trim() ?? '';
+    String toTimeString = data['toTime']?.trim() ?? '';
 
-  // Parse to date and time
-  DateTime toDate = DateFormat('yyyy-MM-dd').parse(toDateString);
-  DateTime toTime = DateFormat('hh:mm a').parse(toTimeString);
+    // Parse to date and time
+    DateTime toDate = DateFormat('yyyy-MM-dd').parse(toDateString);
+    DateTime toTime = DateFormat('hh:mm a').parse(toTimeString);
 
-  // Combine date and time into a single DateTime object
-  DateTime combinedDateTime = DateTime(
-    toDate.year,
-    toDate.month,
-    toDate.day,
-    toTime.hour,
-    toTime.minute,
-  );
+    // Combine date and time into a single DateTime object
+    DateTime combinedDateTime = DateTime(
+      toDate.year,
+      toDate.month,
+      toDate.day,
+      toTime.hour,
+      toTime.minute,
+    );
 
-  // Format the current date and time
-  DateTime currentDateTime = DateTime.now();
+    // Format the current date and time
+    DateTime currentDateTime = DateTime.now();
 
-  return combinedDateTime.isBefore(currentDateTime);
-}
-
+    return combinedDateTime.isBefore(currentDateTime);
+  }
 }

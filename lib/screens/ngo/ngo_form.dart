@@ -14,7 +14,9 @@ import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/ngo/ngo_home.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
+import 'package:spoonshare/widgets/auto_complete.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
+import 'package:uuid/uuid.dart';
 
 class NGOFormScreen extends StatefulWidget {
   const NGOFormScreen({Key? key}) : super(key: key);
@@ -35,8 +37,8 @@ class NGOFormScreenState extends State<NGOFormScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch user profile data
     fetchUserProfileData();
+    _addressController.addListener(onModify);
   }
 
   Future<void> fetchUserProfileData() async {
@@ -58,7 +60,56 @@ class NGOFormScreenState extends State<NGOFormScreen> {
   File? _imageFile;
   late double lat;
   late double lng;
-  // final bool _addressSelected = false;
+  bool _addressSelected = false;
+
+  String tokenForSession = "12345";
+  List<Map<String, dynamic>> listForPlaces = [];
+  var uuid = const Uuid();
+
+  Future<void> makeSuggestions(String input) async {
+    try {
+      var suggestions = await PlaceApi.getSuggestions(input);
+      setState(() {
+        listForPlaces = suggestions;
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  void onModify() {
+    if (tokenForSession.isEmpty) {
+      setState(() {
+        tokenForSession = uuid.v4();
+      });
+    }
+    makeSuggestions(_addressController.text);
+  }
+
+  Future<void> handleListItemTap(int index) async {
+    String placeId = listForPlaces[index]['place_id'];
+    var placeDetails = await PlaceApi.getPlaceDetails(placeId);
+    double selectedLat = placeDetails['geometry']['location']['lat'];
+    double selectedLng = placeDetails['geometry']['location']['lng'];
+    String selectedAddress = listForPlaces[index]['description'];
+    print(selectedAddress);
+    print(selectedLat);
+    print(selectedLng);
+
+    setState(() {
+      _addressController.text = selectedAddress;
+      lat =
+          selectedLat; // Update the class-level variables with the selected values
+      lng = selectedLng;
+      _addressSelected = true; // Set _addressSelected to true
+    });
+  }
 
   bool _validateFields() {
     return _ngoNameController.text.isNotEmpty &&
@@ -73,6 +124,8 @@ class NGOFormScreenState extends State<NGOFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool showExpandedList =
+        _addressController.text.isNotEmpty && !_addressSelected;
     return Scaffold(
       appBar: AppBar(
         title: const Text('NGO Form'),
@@ -204,6 +257,36 @@ class NGOFormScreenState extends State<NGOFormScreen> {
               label: 'Address*',
               controller: _addressController,
             ),
+            if (showExpandedList)
+              Container(
+                height: 200, // Set the height of the suggestions container
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ListView.builder(
+                  itemCount: listForPlaces.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () async {
+                        _addressSelected = true;
+                        await handleListItemTap(index);
+                      },
+                      title: Text(
+                        listForPlaces[index]['description'],
+                      ),
+                    );
+                  },
+                ),
+              ),
             const SizedBox(height: 16),
             CustomTextField(
               label: 'LinkedIn/Instagram Profile Links*',
@@ -406,6 +489,9 @@ class NGOFormScreenState extends State<NGOFormScreen> {
           _imageFile,
           _ngoNameController.text,
         );
+
+        GeoPoint location = GeoPoint(lat, lng);
+
         await FirebaseFirestore.instance.collection('ngos').add({
           'ngoName': _ngoNameController.text,
           'mobileNo': _mobileNoController.text,
@@ -415,6 +501,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
           'incorporationDay': _selectedIncorporationDay,
           'description': _decripationController.text,
           'address': _addressController.text,
+          'location': location,
           'linkedin': _linkedinController.text,
           'verified': false,
         });
