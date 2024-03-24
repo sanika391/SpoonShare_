@@ -2,11 +2,6 @@
 
 **Problem Statement**: Inadequate surplus food distribution generates hunger, necessitating a comprehensive solution. Our project addresses this challenge through an innovative platform, connecting donors with recipients to bridge the gap in food distribution.
 
-A **Google Solution Challenge Project'24** Organised By Google Developer Student Clubs Project by **Team Innovision Squad From Deogiri Institute of Engineering And Management Studies Chh. Sambhajinagar.**
-
-**Exciting News!**
-We are thrilled to announce that SpoonShare has been selected for the regional bootcamp at **Vidyalankar Institute of Technology, Mumbai**!
-[Check out the announcement on LinkedIn](https://www.linkedin.com/posts/shuence_spoonshare-regionalbootcamp-mumbai-activity-7162722028817530882-f9iL?utm_source=share&utm_medium=member_desktop)
 
 ## Live Preview
 
