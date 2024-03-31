@@ -21,7 +21,7 @@ Join us in the mission to minimize food waste, foster community engagement, and 
 ## Intro To SpoonShare Video
 
 [![Intro To SpoonShare](https://github.com/shuence/SpoonShare/assets/65482186/927266f1-8703-4dac-9bb6-922e5844458e)
-]((https://www.youtube.com/watch?v=Ui9rmhcHARM))
+(https://www.youtube.com/watch?v=Ui9rmhcHARM)])
 
 
 Short but detailed introduction to SpoonShare. Click on the image above to watch the video.
@@ -156,18 +156,9 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
 - Robust community engagement strategy for user interaction.
 - Partnerships with NGOs, local businesses, and institutions for expanded impact.
 
-# Hi, We are InnovisionSquad! 👋
 
-
-## 🚀 About us
-
-We are a team from Deogiri Institute of Engineering And Management Studies Chh. Sambhajinagar 
 
 - Sanika Chavan - [Sanika](https://linkedin.com/in/sanika-chavan-52457b236/)
-- Krishna Dnyaneshwar Aute - [Krishna](https://www.linkedin.com/in/krishna-aute-195b2b135/)
-- Shubham Vishnu Pitekar - [Shuence](https://shuence.com)
-- Mohammed Rehan - [Rehan](https://www.linkedin.com/in/mdrehan15/)
 
-## Happy coding 💯
 
-Made with love from [InnovsionSquad]() ❤️
+## Happy coding 💯❤️
