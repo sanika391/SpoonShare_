@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:spoonshare/colors.dart';
 import 'package:spoonshare/screens/home/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,6 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: kOrangeColor,
+    ));
     return Scaffold(
       body: Center(
         child: Column(
