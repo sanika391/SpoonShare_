@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:spoonshare/colors.dart';
 import 'package:spoonshare/controllers/auth/signup_controller.dart';
 import 'package:spoonshare/screens/auth/signin.dart';
 import 'package:spoonshare/screens/home/home.dart';
@@ -41,7 +43,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: kOrangeColor, // Status bar color
+    ));
     return Scaffold(
+
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -63,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: const EdgeInsets.only(
                         top: 4,
                       ),
-                      decoration: const BoxDecoration(color: Color(0xFFFF9F1C)),
+                      decoration:  BoxDecoration(color: kOrangeColor),
                       child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -93,46 +99,74 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: 275,
-                  height: 69,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        Column(
                     children: [
-                      const Text(
-                        'Join the movement!',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24,
-                          fontFamily: 'Lora',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      SizedBox(
-                        width: 275,
-                        child: Text(
-                          'Explore nearby food or join us to make a difference!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.800000011920929),
-                            fontSize: 14,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
+                    const Text(
+                            'Join the movement!',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontFamily: 'Lora',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                                  'Explore nearby food or join us\nto make a difference!',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.800000011920929),
+                                    fontSize: 14,
+                                    fontFamily: 'DM Sans',
+                                    fontWeight: FontWeight.w500,
+                                    height: 0,
+                                  ),
+                                ),
                     ],
                   ),
-                ),
+
+                // SizedBox(
+                //   width: 275,
+                //   height: 69,
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.min,
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       const Text(
+                //         'Join the movement!',
+                //         style: TextStyle(
+                //           color: Colors.black,
+                //           fontSize: 24,
+                //           fontFamily: 'Lora',
+                //           fontWeight: FontWeight.w700,
+                //           height: 0,
+                //         ),
+                //       ),
+                //       const SizedBox(height: 8),
+                //       Container(
+                //         width: 320,
+                //         height: 38,
+                //         child: Text(
+                //           'Explore nearby food or join us\nto make a difference!',
+                //           textAlign: TextAlign.center,
+                //           style: TextStyle(
+                //             color: Colors.black.withOpacity(0.800000011920929),
+                //             fontSize: 14,
+                //             fontFamily: 'DM Sans',
+                //             fontWeight: FontWeight.w500,
+                //             height: 0,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 Container(
-                  width: 218,
-                  height: 38,
+                  width: 240,
+                  height: 40,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   decoration: ShapeDecoration(
@@ -251,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           TextSpan(
                             text:
-                                'By signing up, you confirm that you have read and agreed to SpoopShare’s ',
+                                'By signing up, you confirm that you have read and agreed to SpoonShare’s ',
                             style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 11,
@@ -334,10 +368,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               height: 0,
                             ),
                           ),
-                          const TextSpan(
+                          TextSpan(
                             text: 'Log in',
                             style: TextStyle(
-                              color: Color(0xFFFF9F1C),
+                              color: kOrangeColor,
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
@@ -388,7 +422,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF9F1C),
+                    backgroundColor: kOrangeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
