@@ -161,7 +161,7 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
 
 ## 🚀 About me
 
-We are a team from Deogiri Institute of Engineering And Management Studies Chh. Sambhajinagar and Core Team Members of [GDSC DIEMS](https://gdsc.community.dev/deogiri-institute-of-engineering-and-management-studies-aurangabad/)
+I am from Deogiri Institute of Engineering And Management Studies Chh. Sambhajinagar and Core Team Members of [GDSC DIEMS](https://gdsc.community.dev/deogiri-institute-of-engineering-and-management-studies-aurangabad/)
 
 - Sanika Chavan - [Sanika](https://linkedin.com/in/sanika-chavan-52457b236/)
 
