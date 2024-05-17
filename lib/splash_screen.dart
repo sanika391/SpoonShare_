@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       children: [
                         Container(
                           width: 130,
-                          height: 130,
+                          height: 100,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/spoonshare.png"),

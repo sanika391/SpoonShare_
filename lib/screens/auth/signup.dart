@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 146,
+                      height: 100,
                       padding: const EdgeInsets.only(
                         top: 4,
                       ),

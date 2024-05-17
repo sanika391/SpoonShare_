@@ -33,7 +33,7 @@ class _DonatePageState extends State<DonatePage> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 146,
+                    height: 100,
                     padding: const EdgeInsets.only(
                       top: 4,
                     ),

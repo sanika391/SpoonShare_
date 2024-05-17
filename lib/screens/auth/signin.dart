@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 146,
+                              height: 100,
                               padding: const EdgeInsets.only(
                                 top: 4,
                               ),

@@ -33,7 +33,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 146,
+                    height: 100,
                     padding: const EdgeInsets.only(
                       top: 4,
                     ),
