@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     Key? key,
     required this.label,
     required this.controller,
+    this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: validator,
         decoration: InputDecoration(
           labelText: label,
           contentPadding: const EdgeInsets.symmetric(
