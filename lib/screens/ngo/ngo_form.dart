@@ -26,6 +26,20 @@ class NGOFormScreen extends StatefulWidget {
 }
 
 class NGOFormScreenState extends State<NGOFormScreen> {
+  final RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+  );
+
+  final RegExp mobileRegex = RegExp(
+      r'^(\+|00)?[0-9]{10,15}$'
+  );
+  final RegExp linkedinRegex = RegExp(
+    r'^(https?:\/\/)?([\w]+\.)?linkedin\.com\/.*$',
+  );
+
+  final RegExp instagramRegex = RegExp(
+    r'^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?$',
+  );
   final TextEditingController _ngoNameController = TextEditingController();
   final TextEditingController _ngoNoController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
@@ -113,7 +127,25 @@ class NGOFormScreenState extends State<NGOFormScreen> {
   }
 
   bool _validateFields() {
-    return _ngoNameController.text.isNotEmpty &&
+    bool isValid = true;
+    if (!emailRegex.hasMatch(_emailController.text)) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid email address');
+    }
+
+    if (!mobileRegex.hasMatch(_mobileNoController.text)) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid mobile number');
+    }
+
+    if (_linkedinController.text.isEmpty ||
+        (!linkedinRegex.hasMatch(_linkedinController.text) &&
+            !instagramRegex.hasMatch(_linkedinController.text))) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid LinkedIn or Instagram profile link');
+    }
+
+    return (isValid) && _ngoNameController.text.isNotEmpty &&
         _ngoNoController.text.isNotEmpty &&
         _mobileNoController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
@@ -166,11 +198,27 @@ class NGOFormScreenState extends State<NGOFormScreen> {
             CustomTextField(
               label: 'Mobile No*',
               controller: _mobileNoController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your mobile number';
+                } else if (!mobileRegex.hasMatch(value)) {
+                  return 'Please enter a valid mobile number';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             CustomTextField(
               label: 'Email Address*',
               controller: _emailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email address';
+                } else if (!emailRegex.hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             Container(
@@ -298,6 +346,14 @@ class NGOFormScreenState extends State<NGOFormScreen> {
             CustomTextField(
               label: 'LinkedIn/Instagram Profile Links*',
               controller: _linkedinController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your LinkedIn or Instagram profile link';
+                } else if (!linkedinRegex.hasMatch(value) && !instagramRegex.hasMatch(value)) {
+                  return 'Please enter a valid LinkedIn or Instagram profile link';
+                }
+                return null;
+              },
             ),
             _buildSubmitButton()
           ],

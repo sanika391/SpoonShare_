@@ -8,7 +8,7 @@ import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
-
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 class NGO {
   final String ngoname;
   final String description;
@@ -29,6 +29,23 @@ class VolunteerFormScreen extends StatefulWidget {
 }
 
 class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
+  final RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+  );
+
+  final RegExp mobileRegex = RegExp(
+      r'^(\+|00)?[0-9]{10,15}$'
+  );
+
+  final RegExp linkedinRegex = RegExp(
+    r'^(https?:\/\/)?([\w]+\.)?linkedin\.com\/.*$',
+  );
+
+  final RegExp instagramRegex = RegExp(
+    r'^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?$',
+  );
+
+
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -86,18 +103,61 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
   String? _selectedGender;
   DateTime? _selectedBirthday;
   NGO? _selectedNGO;
-
+  //
+  // bool _validateFields() {
+  //   return _fullNameController.text.isNotEmpty &&
+  //       _mobileNoController.text.isNotEmpty &&
+  //       _emailController.text.isNotEmpty &&
+  //       _selectedGender != null &&
+  //       _selectedBirthday != null &&
+  //       (_occupationController.text.isNotEmpty ||
+  //           _addressController.text.isNotEmpty) &&
+  //       _linkedinController.text.isNotEmpty &&
+  //       _selectedNGO != null;
+  // }
   bool _validateFields() {
-    return _fullNameController.text.isNotEmpty &&
-        _mobileNoController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _selectedGender != null &&
-        _selectedBirthday != null &&
-        (_occupationController.text.isNotEmpty ||
-            _addressController.text.isNotEmpty) &&
-        _linkedinController.text.isNotEmpty &&
-        _selectedNGO != null;
+    bool isValid = true;
+
+    if (_fullNameController.text.isEmpty) {
+      isValid = false;
+    }
+
+    if (!emailRegex.hasMatch(_emailController.text)) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid email address');
+    }
+
+    if (!mobileRegex.hasMatch(_mobileNoController.text)) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid mobile number');
+    }
+
+    if (_selectedGender == null) {
+      isValid = false;
+    }
+
+    if (_selectedBirthday == null) {
+      isValid = false;
+    }
+
+    if (_occupationController.text.isEmpty && _addressController.text.isEmpty) {
+      isValid = false;
+    }
+
+    if (_linkedinController.text.isEmpty ||
+        (!linkedinRegex.hasMatch(_linkedinController.text) &&
+            !instagramRegex.hasMatch(_linkedinController.text))) {
+      isValid = false;
+      showErrorSnackbar(context, 'Please enter a valid LinkedIn or Instagram profile link');
+    }
+
+    if (_selectedNGO == null) {
+      isValid = false;
+    }
+
+    return isValid;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,16 +186,77 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
             CustomTextField(
               label: 'Full Name*',
               controller: _fullNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your full name';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
+            // InternationalPhoneNumberInput(
+            //   selectorConfig: const SelectorConfig(
+            //     selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+            //     setSelectorButtonAsPrefixIcon: true,
+            //     leadingPadding: 20,
+            //     useEmoji: true,
+            //   ),
+            //   hintText: 'Phone number',
+            //   validator: (userInput) {
+            //     if (userInput!.isEmpty) {
+            //       return 'Please enter your phone number';
+            //     }
+            //
+            //     // Ensure it is only digits and optional '+' or '00' for the country code.
+            //     if (!RegExp(r'^(\+|00)?[0-9]+$').hasMatch(userInput)) {
+            //       return 'Please enter a valid phone number';
+            //     }
+            //
+            //     return null; // Return null when the input is valid
+            //   },
+            //   onInputChanged: (PhoneNumber number) {
+            //     userPhone = number.phoneNumber;
+            //   },
+            //   onInputValidated: (bool value) {
+            //     print(value);
+            //   },
+            //   ignoreBlank: false,
+            //   autoValidateMode: AutovalidateMode.onUserInteraction,
+            //   selectorTextStyle: const TextStyle(color: Colors.black),
+            //   initialValue: number,
+            //   textFieldController: _mobileNoController,
+            //   formatInput: true,
+            //   keyboardType: const TextInputType.numberWithOptions(
+            //       signed: true, decimal: true),
+            //   onSaved: (PhoneNumber number) {
+            //     userPhone = number.phoneNumber;
+            //   },
+            // ),
+            //
             CustomTextField(
               label: 'Mobile No*',
               controller: _mobileNoController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your mobile number';
+                } else if (!mobileRegex.hasMatch(value)) {
+                  return 'Please enter a valid mobile number';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             CustomTextField(
               label: 'Email Address*',
               controller: _emailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email address';
+                } else if (!emailRegex.hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             Container(
@@ -233,6 +354,14 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
             CustomTextField(
               label: 'LinkedIn/Instagram Profile Links*',
               controller: _linkedinController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your LinkedIn or Instagram profile link';
+                } else if (!linkedinRegex.hasMatch(value) && !instagramRegex.hasMatch(value)) {
+                  return 'Please enter a valid LinkedIn or Instagram profile link';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 16),
             Padding(
@@ -397,3 +526,7 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     }
   }
 }
+
+
+
+
