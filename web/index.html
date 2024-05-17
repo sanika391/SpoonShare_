@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="$FLUTTER_BASE_HREF" />
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="A new Flutter project." />
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="SpoonShare" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+    <meta
+      name="google-signin-client_id"
+      content="978431054644-hsffv4di2m65t65cglnhdmqmfq8bql2l.apps.googleusercontent.com"
+    />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/images/spoonshare_launcher.png"
+    />
+    <title>SpoonShare</title>
+    <link rel="manifest" href="manifest.json" />
+    <script>
+      // The value below is injected by flutter build, do not touch.
+      const serviceWorkerVersion = null;
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-DTHELS4X4P"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-DTHELS4X4P");
+  </script>
+  <body>
+    <script>
+      window.addEventListener("load", function (ev) {
+        // Download main.dart.js
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine().then(function (appRunner) {
+              appRunner.runApp();
+            });
+          },
+        });
+      });
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDgHvrFLRxLKMa73qO_eb1j8NrFLoEIHDY",
+        appId: "1:978431054644:web:e0ae7a5c998d8960cf4b61",
+        messagingSenderId: "978431054644",
+        projectId: "spoonshare-meal",
+        authDomain: "spoonshare-meal.firebaseapp.com",
+        storageBucket: "spoonshare-meal.appspot.com",
+        measurementId: "G-DTHELS4X4P",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  </body>
+</html>
