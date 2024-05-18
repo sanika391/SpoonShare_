@@ -152,7 +152,7 @@ class Onboarding extends StatelessWidget {
               const SizedBox(height: 50),
                    Container(
                   margin:
-                      const EdgeInsets.only(top: 10), // Add margin to the top
+                      const EdgeInsets.only(bottom: 40), // Add margin to the top
                   child: SizedBox(
                     width: 296,
                     child: Text.rich(
