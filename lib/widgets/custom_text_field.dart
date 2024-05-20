@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       child: TextFormField(
@@ -37,8 +38,8 @@ class CustomTextField extends StatelessWidget {
               color: Color(0xFFFF9F1C),
             ),
           ),
-          labelStyle: const TextStyle(
-            color: Colors.black87,
+          labelStyle: TextStyle(
+            color: isDarkMode ? Colors.white60 : Colors.black87,
             fontFamily: 'DM Sans',
             fontSize: 16,
             fontWeight: FontWeight.w500,

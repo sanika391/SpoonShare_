@@ -37,7 +37,7 @@ class DashboardHomePage extends StatelessWidget {
         );
         break;
       default:
-       Navigator.pushReplacement(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => const DashboardPage(),
@@ -52,6 +52,10 @@ class DashboardHomePage extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       navigateToRoleScreen(context);
     });
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       body: Container(
@@ -61,17 +65,20 @@ class DashboardHomePage extends StatelessWidget {
           top: MediaQuery.of(context).padding.top,
         ),
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Colors.white),
-        child: const Column(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(), // Show a loading indicator while navigating
-            SizedBox(height: 16),
+            CircularProgressIndicator(
+              color: textColor,
+            ), // Show a loading indicator while navigating
+            const SizedBox(height: 16),
             Text(
               'Redirecting...',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: textColor,
               ),
             ),
           ],

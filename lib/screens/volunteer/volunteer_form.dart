@@ -9,6 +9,7 @@ import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+
 class NGO {
   final String ngoname;
   final String description;
@@ -29,13 +30,10 @@ class VolunteerFormScreen extends StatefulWidget {
 }
 
 class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
-  final RegExp emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-  );
+  final RegExp emailRegex =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
-  final RegExp mobileRegex = RegExp(
-      r'^(\+|00)?[0-9]{10,15}$'
-  );
+  final RegExp mobileRegex = RegExp(r'^(\+|00)?[0-9]{10,15}$');
 
   final RegExp linkedinRegex = RegExp(
     r'^(https?:\/\/)?([\w]+\.)?linkedin\.com\/.*$',
@@ -44,7 +42,6 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
   final RegExp instagramRegex = RegExp(
     r'^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?$',
   );
-
 
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
@@ -148,7 +145,8 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
         (!linkedinRegex.hasMatch(_linkedinController.text) &&
             !instagramRegex.hasMatch(_linkedinController.text))) {
       isValid = false;
-      showErrorSnackbar(context, 'Please enter a valid LinkedIn or Instagram profile link');
+      showErrorSnackbar(
+          context, 'Please enter a valid LinkedIn or Instagram profile link');
     }
 
     if (_selectedNGO == null) {
@@ -158,9 +156,9 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     return isValid;
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Volunteer Form'),
@@ -272,14 +270,16 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0xFFFF9F1C),
+                        width: isDarkMode ? 2.0 : 1.0,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0xFFFF9F1C),
+                        width: isDarkMode ? 2.0 : 1.0,
                       ),
                     )),
                 onChanged: (newValue) {
@@ -302,20 +302,25 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
               child: TextFormField(
                 decoration: InputDecoration(
                     labelText: "Birthday*",
+                    labelStyle: TextStyle(
+                      color: isDarkMode ? Colors.white60 : Colors.black87,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0,
                       vertical: 12.0,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0xFFFF9F1C),
+                        width: isDarkMode ? 2.0 : 1.0,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0xFFFF9F1C),
+                        width: isDarkMode ? 2.0 : 1.0,
                       ),
                     )),
                 readOnly: true,
@@ -357,7 +362,8 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your LinkedIn or Instagram profile link';
-                } else if (!linkedinRegex.hasMatch(value) && !instagramRegex.hasMatch(value)) {
+                } else if (!linkedinRegex.hasMatch(value) &&
+                    !instagramRegex.hasMatch(value)) {
                   return 'Please enter a valid LinkedIn or Instagram profile link';
                 }
                 return null;
@@ -405,8 +411,8 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
                           color: Color(0xFFFF9F1C),
                         ),
                       ),
-                      labelStyle: const TextStyle(
-                        color: Colors.black87,
+                      labelStyle: TextStyle(
+                        color: isDarkMode ? Colors.white60 : Colors.black87,
                         fontFamily: 'DM Sans',
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -526,7 +532,3 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     }
   }
 }
-
-
-
-

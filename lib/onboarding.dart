@@ -7,6 +7,7 @@ class Onboarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: Center(
         child: Container(
@@ -15,7 +16,7 @@ class Onboarding extends StatelessWidget {
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
           ),
-          color: Colors.white,
+          // color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -69,7 +70,7 @@ class Onboarding extends StatelessWidget {
                 'Be the Spoon in someone\'s road,',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  // color: Colors.black,
                   fontSize: 16,
                   fontFamily: 'DM Sans',
                   fontWeight: FontWeight.w500,
@@ -79,7 +80,7 @@ class Onboarding extends StatelessWidget {
                 'feed hope instead of hunger.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  // color: Colors.black,
                   fontSize: 16,
                   fontFamily: 'DM Sans',
                   fontWeight: FontWeight.w500,
@@ -117,7 +118,9 @@ class Onboarding extends StatelessWidget {
                   Text(
                     'Already a member?',
                     style: TextStyle(
-                      color: Colors.black.withOpacity(0.6),
+                      color: isDarkMode
+                          ? Colors.white.withOpacity(0.6)
+                          : Colors.black.withOpacity(0.6),
                       fontSize: 13,
                       fontFamily: 'DM Sans',
                       fontWeight: FontWeight.w500,
@@ -140,7 +143,7 @@ class Onboarding extends StatelessWidget {
                     child: const Text(
                       'LOGIN',
                       style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 16,
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
@@ -150,64 +153,68 @@ class Onboarding extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 50),
-                   Container(
-                  margin:
-                      const EdgeInsets.only(bottom: 40), // Add margin to the top
-                  child: SizedBox(
-                    width: 296,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                'By signing up, you confirm that you have read and agreed to SpoopShare’s ',
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 11,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
+              Container(
+                margin:
+                    const EdgeInsets.only(bottom: 40), // Add margin to the top
+                child: SizedBox(
+                  width: 296,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              'By signing up, you confirm that you have read and agreed to SpoopShare’s ',
+                          style: TextStyle(
+                            color: isDarkMode
+                                ? Colors.white.withOpacity(0.6)
+                                : Colors.black.withOpacity(0.6),
+                            fontSize: 11,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
                           ),
-                          const TextSpan(
-                            text: 'Privacy Policy',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 11,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.underline,
-                              height: 0,
-                            ),
+                        ),
+                        const TextSpan(
+                          text: 'Privacy Policy',
+                          style: TextStyle(
+                            // color: Colors.black,
+                            fontSize: 11,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            height: 0,
                           ),
-                          TextSpan(
-                            text: ' & ',
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 11,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
+                        ),
+                        TextSpan(
+                          text: ' & ',
+                          style: TextStyle(
+                            color: isDarkMode
+                                ? Colors.white.withOpacity(0.6)
+                                : Colors.black.withOpacity(0.6),
+                            fontSize: 11,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
                           ),
-                          const TextSpan(
-                            text: 'Terms',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 11,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.underline,
-                              height: 0,
-                            ),
+                        ),
+                        const TextSpan(
+                          text: 'Terms',
+                          style: TextStyle(
+                            // color: Colors.black,
+                            fontSize: 11,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            height: 0,
                           ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-        ],
+              ),
+            ],
           ),
         ),
       ),

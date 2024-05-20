@@ -16,6 +16,12 @@ class _DonatePageState extends State<DonatePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final secondaryTextColor = isDarkMode
+        ? Colors.white.withOpacity(0.8)
+        : Colors.black.withOpacity(0.8);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -24,7 +30,7 @@ class _DonatePageState extends State<DonatePage> {
           top: MediaQuery.of(context).padding.top,
         ),
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: backgroundColor),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -44,7 +50,7 @@ class _DonatePageState extends State<DonatePage> {
                         Text(
                           'SpoonShare',
                           style: TextStyle(
-                            color: Colors.white,
+                            // color: Colors.white,
                             fontSize: 28,
                             fontFamily: 'Lora',
                             fontWeight: FontWeight.w700,
@@ -67,7 +73,7 @@ class _DonatePageState extends State<DonatePage> {
                 ],
               ),
               const SizedBox(height: 32),
-              SizedBox(
+              const SizedBox(
                 width: 275,
                 height: 69,
                 child: Column(
@@ -75,24 +81,24 @@ class _DonatePageState extends State<DonatePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       '“Join Spoon Share”',
                       style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 24,
                         fontFamily: 'Lora',
                         fontWeight: FontWeight.bold,
                         height: 0,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2),
                     SizedBox(
                       width: 275,
                       child: Text(
                         'Explore nearby food or join us to make a difference!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.800000011920929),
+                          // color: Colors.black.withOpacity(0.800000011920929),
                           fontSize: 14,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w500,
@@ -144,7 +150,7 @@ class _DonatePageState extends State<DonatePage> {
                               const Text(
                                 'Share Free Food',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.w700,
@@ -184,7 +190,7 @@ class _DonatePageState extends State<DonatePage> {
                               const Text(
                                 'Donate Food',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.w700,

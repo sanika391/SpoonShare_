@@ -19,6 +19,18 @@ class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    // Define colors for light and dark modes
+    Color primaryColor = isDarkMode ? Colors.white : Colors.black;
+    Color secondaryColor =
+        isDarkMode ? Colors.grey[700]! : Colors.black.withOpacity(0.5);
+    //Colors.grey[500]!;
+    Color backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    Color accentColor = const Color(0xFFFF9F1C);
+    Color inactiveAccentColor = const Color(0x28FF9F1C);
+    Color notificationIconColor = isDarkMode ? Colors.black : Colors.white;
+    const highlightColor = Color(0xFFFF9F1C);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -44,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         widget.role,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
+                          color: secondaryColor,
                           fontSize: 16,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w700,
@@ -83,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: IconButton(
                           icon: const Icon(Icons.notifications),
-                          color: Colors.white,
+                          color: notificationIconColor,
                           onPressed: () {},
                         ),
                       ),
@@ -98,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       width: 1,
-                      color: Colors.black.withOpacity(0.1),
+                      color: primaryColor.withOpacity(0.1),
                     ),
                     borderRadius:
                         BorderRadius.circular(15), // Added border radius
@@ -119,9 +131,8 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'RECENTLY UPLOADED',
                       style: TextStyle(
-                        color: selectedIndex == 0
-                            ? Colors.black
-                            : Colors.black.withOpacity(0.6),
+                        color:
+                            selectedIndex == 0 ? primaryColor : secondaryColor,
                         fontSize: 14,
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
@@ -140,9 +151,8 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'DAILY ACTIVE',
                       style: TextStyle(
-                        color: selectedIndex == 1
-                            ? Colors.black
-                            : Colors.black.withOpacity(0.6),
+                        color:
+                            selectedIndex == 1 ? primaryColor : secondaryColor,
                         fontSize: 14,
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
@@ -161,8 +171,8 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       height: 1, // Adjust the height of the line as needed
                       color: selectedIndex == 0
-                          ? const Color(0xFFFF9F1C)
-                          : const Color(0x28FF9F1C),
+                          ? highlightColor
+                          : highlightColor.withOpacity(0.16),
                     ),
                   ),
                   Expanded(
@@ -181,10 +191,10 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   margin: const EdgeInsets.only(top: 30),
                   alignment: Alignment.centerLeft,
-                  child: const Text(
+                  child: Text(
                     'Near By Available Foods',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: primaryColor,
                       fontSize: 16,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
@@ -204,15 +214,15 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-                   Visibility(
+              Visibility(
                 visible: selectedIndex == 0,
                 child: Container(
                   margin: const EdgeInsets.only(top: 30),
                   alignment: Alignment.centerLeft,
-                  child: const Text(
+                  child: Text(
                     'Past Free Foods',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: primaryColor,
                       fontSize: 16,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
@@ -232,7 +242,6 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-            
               Visibility(
                 visible: selectedIndex != 0,
                 child: Column(
@@ -256,10 +265,10 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MapsWidget()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const MapsWidget()));
         },
-        backgroundColor: const Color(0xFFFF9F1C),
+        backgroundColor: highlightColor,
         foregroundColor: Colors.white,
         child: const Icon(Icons.location_on),
       ),

@@ -26,13 +26,10 @@ class NGOFormScreen extends StatefulWidget {
 }
 
 class NGOFormScreenState extends State<NGOFormScreen> {
-  final RegExp emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-  );
+  final RegExp emailRegex =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
-  final RegExp mobileRegex = RegExp(
-      r'^(\+|00)?[0-9]{10,15}$'
-  );
+  final RegExp mobileRegex = RegExp(r'^(\+|00)?[0-9]{10,15}$');
   final RegExp linkedinRegex = RegExp(
     r'^(https?:\/\/)?([\w]+\.)?linkedin\.com\/.*$',
   );
@@ -142,10 +139,12 @@ class NGOFormScreenState extends State<NGOFormScreen> {
         (!linkedinRegex.hasMatch(_linkedinController.text) &&
             !instagramRegex.hasMatch(_linkedinController.text))) {
       isValid = false;
-      showErrorSnackbar(context, 'Please enter a valid LinkedIn or Instagram profile link');
+      showErrorSnackbar(
+          context, 'Please enter a valid LinkedIn or Instagram profile link');
     }
 
-    return (isValid) && _ngoNameController.text.isNotEmpty &&
+    return (isValid) &&
+        _ngoNameController.text.isNotEmpty &&
         _ngoNoController.text.isNotEmpty &&
         _mobileNoController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
@@ -158,6 +157,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     bool showExpandedList =
         _addressController.text.isNotEmpty && !_addressSelected;
     return Scaffold(
@@ -252,7 +252,13 @@ class NGOFormScreenState extends State<NGOFormScreen> {
                 items: ['Food Donation', 'Charity', 'Prefer not to say']
                     .map((gender) => DropdownMenuItem(
                           value: gender,
-                          child: Text(gender),
+                          child: Text(
+                            gender,
+                            style: TextStyle(
+                              color:
+                                  isDarkMode ? Colors.white60 : Colors.black87,
+                            ),
+                          ),
                         ))
                     .toList(),
               ),
@@ -264,6 +270,9 @@ class NGOFormScreenState extends State<NGOFormScreen> {
               child: TextFormField(
                 decoration: InputDecoration(
                     labelText: "Incorporation Date*",
+                    labelStyle: TextStyle(
+                      color: isDarkMode ? Colors.white60 : Colors.black87,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16.0,
                       vertical: 12.0,
@@ -316,11 +325,13 @@ class NGOFormScreenState extends State<NGOFormScreen> {
               Container(
                 height: 200, // Set the height of the suggestions container
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDarkMode ? Colors.black : Colors.white,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: isDarkMode
+                          ? Colors.grey
+                          : Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: const Offset(0, 3),
@@ -349,7 +360,8 @@ class NGOFormScreenState extends State<NGOFormScreen> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your LinkedIn or Instagram profile link';
-                } else if (!linkedinRegex.hasMatch(value) && !instagramRegex.hasMatch(value)) {
+                } else if (!linkedinRegex.hasMatch(value) &&
+                    !instagramRegex.hasMatch(value)) {
                   return 'Please enter a valid LinkedIn or Instagram profile link';
                 }
                 return null;
@@ -454,8 +466,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
     if (androidInfo.version.sdkInt <= 32) {
       status = await [
         Permission.storage,
-        Permission
-            .camera, 
+        Permission.camera,
       ].request();
     } else {
       status = await [

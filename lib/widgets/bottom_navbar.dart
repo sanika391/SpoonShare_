@@ -14,13 +14,24 @@ class BottomNavBar extends StatelessWidget {
     final UserProfile userProfile = UserProfile();
     final String name = userProfile.getFullName();
     final String role = userProfile.getRole();
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final backgroundColor =
+        isDarkMode ? Colors.black54 : const Color(0xFFF0F2F3).withOpacity(0.5);
+    final borderColor = isDarkMode ? Colors.black54 : const Color(0xFFF0F2F3);
+    final selectedIconColor = isDarkMode ? Colors.white : Colors.black54;
+    final selectedTextColor = isDarkMode ? Colors.orange : Colors.orange;
+    final unselectedIconColor = const Color(0xFFFF9F1C);
+    final unselectedRecycleIconColor = const Color(0xFF06D801);
+    final unselectedTextColor =
+        isDarkMode ? Colors.white.withOpacity(0.6) : Colors.black54;
 
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 67,
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F2F3).withOpacity(0.5),
+        color: backgroundColor,
         border: Border.all(color: const Color(0xFFF0F2F3)),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -30,38 +41,66 @@ class BottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(context, Icons.home, 'Home', const Color(0xFFFF9F1C),
-              Colors.black54, HomePage(name: name, role: role)),
+          _buildNavItem(
+              context,
+              Icons.home,
+              'Home',
+              unselectedIconColor,
+              unselectedTextColor,
+              HomePage(name: name, role: role),
+              selectedIconColor,
+              selectedTextColor),
           _buildNavItem(
               context,
               Icons.dashboard,
               'Dashboard',
-              const Color(0xFFFF9F1C),
-              Colors.black54,
-              DashboardHomePage(
-                role: role,
-              )),
-          _buildNavItem(context, Icons.add_circle, 'Donate Food',
-              const Color(0xFFFF9F1C), Colors.black54, const DonatePage()),
-          _buildNavItem(context, Icons.recycling, 'Recycle',
-              const Color(0xFF06D801), Colors.black54, const RecycleScreen()),
+              unselectedIconColor,
+              unselectedTextColor,
+              DashboardHomePage(role: role),
+              selectedIconColor,
+              selectedTextColor),
           _buildNavItem(
               context,
-              Icons.person,
-              'Profile',
-              const Color(0xFFFF9F1C),
-              Colors.black54,
-              UserProfileScreen(
-                name: name,
-                role: role,
-              )),
+              Icons.add_circle,
+              'Donate Food',
+              unselectedIconColor,
+              unselectedTextColor,
+              const DonatePage(),
+              selectedIconColor,
+              selectedTextColor),
+          _buildNavItem(
+              context,
+              Icons.recycling,
+              'Recycle',
+              unselectedRecycleIconColor,
+              unselectedTextColor,
+              const RecycleScreen(),
+              selectedIconColor,
+              selectedTextColor),
+          _buildNavItem(
+            context,
+            Icons.person,
+            'Profile',
+            unselectedIconColor,
+            unselectedTextColor,
+            UserProfileScreen(name: name, role: role),
+            selectedIconColor,
+            selectedTextColor,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(BuildContext context, IconData icon, String label,
-      Color iconColor, Color textColor, Widget destination) {
+  Widget _buildNavItem(
+      BuildContext context,
+      IconData icon,
+      String label,
+      Color iconColor,
+      Color textColor,
+      Widget destination,
+      Color selectedIconColor,
+      Color selectedTextColor) {
     bool isSelected = ModalRoute.of(context)?.settings.name == label;
 
     return Expanded(
@@ -98,15 +137,13 @@ class BottomNavBar extends StatelessWidget {
             Icon(
               icon,
               size: 26,
-              color: isSelected ? Colors.black54 : iconColor,
+              color: isSelected ? selectedIconColor : iconColor,
             ),
             const SizedBox(height: 2),
             Text(
               label,
               style: TextStyle(
-                color: isSelected
-                    ? Colors.orange
-                    : textColor,
+                color: isSelected ? selectedTextColor : textColor,
                 fontSize: 12,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w700,

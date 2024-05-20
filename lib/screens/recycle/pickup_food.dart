@@ -16,6 +16,7 @@ import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:uuid/uuid.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 class RecycleFoodScreenContent extends StatefulWidget {
   const RecycleFoodScreenContent({super.key});
@@ -106,7 +107,7 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 16),
-        _buildImageUploadBox(),
+        _buildImageUploadBox(context),
         const SizedBox(
           height: 8,
         ),
@@ -122,7 +123,7 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              color: Colors.white,
+              // color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
@@ -281,7 +282,9 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
     return picked;
   }
 
-  Widget _buildImageUploadBox() {
+  Widget _buildImageUploadBox(BuildContext context) {
+    final bool isDarkMode =
+        AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -294,11 +297,15 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
               width: 280,
               height: 180,
               decoration: ShapeDecoration(
-                color: Colors.black.withOpacity(0.07999999821186066),
+                color: isDarkMode
+                    ? Colors.white.withOpacity(0.07999999821186066)
+                    : Colors.black.withOpacity(0.07999999821186066),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 1,
-                    color: Colors.black.withOpacity(0.6000000238418579),
+                    color: isDarkMode
+                        ? Colors.white.withOpacity(0.6)
+                        : Colors.black.withOpacity(0.6),
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -514,7 +521,7 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
   }
 
   Widget _buildDropdownInput() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 46,
       child: Padding(
@@ -529,13 +536,13 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Color(0xFFFF9F1C),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Color(0xFFFF9F1C),
               ),
             ),

@@ -14,6 +14,7 @@ import 'package:spoonshare/widgets/loader.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({
@@ -68,6 +69,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final cardColor = isDarkMode ? Colors.grey[800] : Colors.white;
+    final borderColor = isDarkMode
+        ? Colors.white.withOpacity(0.2)
+        : Colors.black.withOpacity(0.2);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -93,7 +102,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Text(
                         widget.role,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
+                          color: textColor.withOpacity(0.5),
                           fontSize: 16,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w700,
@@ -106,7 +115,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: Icon(
+                          AdaptiveTheme.of(context).mode ==
+                                  AdaptiveThemeMode.light
+                              ? Icons.wb_sunny
+                              : Icons.nights_stay,
+                        ),
+                        onPressed: () {
+                          if (AdaptiveTheme.of(context).mode ==
+                              AdaptiveThemeMode.light) {
+                            AdaptiveTheme.of(context).setDark();
+                          } else {
+                            AdaptiveTheme.of(context).setLight();
+                          }
+                        },
+                      ),
+                      const SizedBox(width: 12),
                       Container(
                         width: 42,
                         height: 42,
@@ -135,7 +160,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       width: 1,
-                      color: Colors.black.withOpacity(0.1),
+                      color: borderColor,
                     ),
                     borderRadius:
                         BorderRadius.circular(15), // Added border radius
@@ -161,7 +186,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               shape: BoxShape.circle,
                               border: Border.all(
                                 width: 2,
-                                color: Colors.black.withOpacity(0.1),
+                                color: borderColor,
                               ),
                             ),
                             child: CircleAvatar(
@@ -179,14 +204,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             right: 0,
                             child: Container(
                               padding: const EdgeInsets.all(6),
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white,
+                                color: cardColor,
                               ),
                               child: IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.camera_alt,
-                                    color: Colors.black,
+                                    color: textColor,
                                   ),
                                   onPressed: () async {
                                     await pickFile();
@@ -204,21 +229,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 1,
-                            color: Colors.black.withOpacity(0.2),
+                            color: borderColor,
                           ),
                           borderRadius: BorderRadius.circular(20),
+                          color: cardColor,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.info_outline),
+                                Icon(
+                                  Icons.info_outline,
+                                  color: textColor,
+                                ),
                                 const SizedBox(width: 8),
-                                const Text(
+                                Text(
                                   'Personal Information',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: textColor,
                                     fontSize: 16,
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.w700,
@@ -229,7 +258,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     ? Row(
                                         children: [
                                           IconButton(
-                                            icon: const Icon(Icons.cancel),
+                                            icon: Icon(
+                                              Icons.cancel,
+                                              color: textColor,
+                                            ),
                                             onPressed: () {
                                               setState(() {
                                                 isEditing = false;
@@ -237,7 +269,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                             },
                                           ),
                                           IconButton(
-                                            icon: const Icon(Icons.check),
+                                            icon: Icon(
+                                              Icons.check,
+                                              color: textColor,
+                                            ),
                                             onPressed: () {
                                               setState(() {
                                                 isEditing = false;
@@ -247,7 +282,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                         ],
                                       )
                                     : IconButton(
-                                        icon: const Icon(Icons.edit),
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: textColor,
+                                        ),
                                         onPressed: () {
                                           setState(() {
                                             isEditing = true;
@@ -260,25 +298,28 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Container(
                               width: double.infinity,
                               height: 1,
-                              color: Colors.black.withOpacity(0.2),
+                              color: borderColor,
                             ),
                             const SizedBox(height: 16),
                             buildEditableField(
                               'Name / नाम',
                               nameController,
                               TextInputType.text,
+                              textColor,
                             ),
                             const SizedBox(height: 16),
                             buildEditableField(
                               'Email / ईमेल',
                               emailController,
                               TextInputType.emailAddress,
+                              textColor,
                             ),
                             const SizedBox(height: 16),
                             buildEditableField(
                               'Contact / संपर्क',
                               contactController,
                               TextInputType.phone,
+                              textColor,
                             ),
                             const SizedBox(height: 16),
                             if (isEditing)
@@ -307,21 +348,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 1,
-                            color: Colors.black.withOpacity(0.2),
+                            color: borderColor,
                           ),
                           borderRadius: BorderRadius.circular(20),
+                          color: cardColor,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Row(
+                            Row(
                               children: [
-                                Icon(Icons.info_outline),
-                                SizedBox(width: 8),
+                                const Icon(Icons.info_outline),
+                                const SizedBox(width: 8),
                                 Text(
                                   'Organisation Information',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: textColor,
                                     fontSize: 14,
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.w700,
@@ -364,19 +406,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Container(
                               width: double.infinity,
                               height: 1,
-                              color: Colors.black.withOpacity(0.2),
+                              color: borderColor,
                             ),
                             const SizedBox(height: 16),
                             buildEditableField(
                               'Organisation',
                               orgController,
                               TextInputType.text,
+                              textColor,
                             ),
                             const SizedBox(height: 16),
                             buildEditableField(
                               'Role',
                               roleController,
                               TextInputType.text,
+                              textColor,
                             ),
                             const SizedBox(height: 16),
                             if (isEditing)
@@ -428,6 +472,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     String label,
     TextEditingController controller,
     TextInputType keyboardType,
+    Color textColor,
   ) {
     return isEditing
         ? Column(
@@ -436,7 +481,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Text(
                 label,
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.4),
+                  color: textColor.withOpacity(0.4),
                   fontSize: 14,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w500,
@@ -445,8 +490,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               TextFormField(
                 controller: controller,
                 keyboardType: keyboardType,
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: textColor,
                   fontSize: 16,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w700,
@@ -460,7 +505,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Text(
                 label,
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.4),
+                  color: textColor.withOpacity(0.4),
                   fontSize: 14,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w500,
@@ -468,8 +513,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               Text(
                 controller.text,
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: textColor,
                   fontSize: 16,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w700,
