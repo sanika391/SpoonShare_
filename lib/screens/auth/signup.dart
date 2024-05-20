@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spoonshare/colors.dart';
@@ -21,10 +19,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contactNumberController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
@@ -99,32 +97,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 const SizedBox(height: 16),
-        Column(
-                    children: [
+                Column(
+                  children: [
                     const Text(
-                            'Join the movement!',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
-                              fontFamily: 'Lora',
-                              fontWeight: FontWeight.w700,
-                              height: 0,
-                            ),
-                          ),
-                      const SizedBox(height: 8),
-                      Text(
-                                  'Explore nearby food or join us\nto make a difference!',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(0.800000011920929),
-                                    fontSize: 14,
-                                    fontFamily: 'DM Sans',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                  ),
-                                ),
-                    ],
-                  ),
+                      'Join the movement!',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontFamily: 'Lora',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Explore nearby food or join us\nto make a difference!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.800000011920929),
+                        fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
 
                 // SizedBox(
                 //   width: 275,
@@ -168,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: 240,
                   height: 40,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(width: 1),
@@ -277,7 +275,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Container(
                   margin:
-                      const EdgeInsets.only(top: 10), // Add margin to the top
+                  const EdgeInsets.only(top: 10), // Add margin to the top
                   child: SizedBox(
                     width: 296,
                     child: Text.rich(
@@ -285,7 +283,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           TextSpan(
                             text:
-                                'By signing up, you confirm that you have read and agreed to SpoonShare’s ',
+                            'By signing up, you confirm that you have read and agreed to SpoonShare’s ',
                             style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 11,
@@ -341,7 +339,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const SignInScreen()), // Replace LoginScreen with the actual screen you want to navigate to
+                            const SignInScreen()), // Replace LoginScreen with the actual screen you want to navigate to
                       );
                     },
                     child: Text.rich(
@@ -351,7 +349,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             text: 'Already have an account?',
                             style: TextStyle(
                               color:
-                                  Colors.black.withOpacity(0.699999988079071),
+                              Colors.black.withOpacity(0.699999988079071),
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w500,
@@ -390,35 +388,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // Show loading indicator
                     showLoadingDialog(context);
 
-                    try {
-                      // Perform signup asynchronously
-                      await _signUpController.signUp(
-                        fullName: _fullNameController.text,
-                        email: _emailController.text,
-                        contactNumber: _contactNumberController.text,
-                        password: _passwordController.text,
-                        confirmPassword: _confirmPasswordController.text,
-                        context: context,
-                      );
+                    bool valid = await _signUpController.signUp(
+                      fullName: _fullNameController.text,
+                      email: _emailController.text,
+                      contactNumber: _contactNumberController.text,
+                      password: _passwordController.text,
+                      confirmPassword: _confirmPasswordController.text,
+                      context: context,
+                    );
 
-                      // Hide loading indicator
-                      Navigator.of(context).pop(); // Pop the loading dialog
+                    // Hide loading indicator
+                    Navigator.of(context).pop();
 
+                    if (valid) {
+                      // Navigate to HomeScreen if signup is successful
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                          builder: (context) => const HomeScreen(),
+                        ),
                       );
-                    } catch (e) {
-                      // Handle any exceptions during signup
-                      print("Signup failed: $e");
-
-                      // Hide loading indicator
-                      Navigator.of(context).pop(); // Pop the loading dialog
-
-                      // You can customize this part based on your requirements
-                      showErrorSnackbar(
-                          context, 'Signup failed. Please try again.');
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -513,13 +502,13 @@ class InputField extends StatelessWidget {
                 border: InputBorder.none,
                 suffixIcon: isPassword && togglePasswordVisibility != null
                     ? IconButton(
-                        icon: Icon(
-                          isPasswordVisible!
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: togglePasswordVisibility,
-                      )
+                  icon: Icon(
+                    isPasswordVisible!
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: togglePasswordVisibility,
+                )
                     : null,
               ),
             ),
