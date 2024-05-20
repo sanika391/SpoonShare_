@@ -12,6 +12,8 @@ import 'package:spoonshare/screens/fooddetails/food_details.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 
 class MapsWidget extends StatefulWidget {
+  const MapsWidget({super.key});
+
   @override
   _MapsWidgetState createState() => _MapsWidgetState();
 }
@@ -226,9 +228,9 @@ class _MapsWidgetState extends State<MapsWidget> {
               child: Column(
                 children: [
                   const SizedBox(height: 8),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width - 16,
-                    height: MediaQuery.of(context).size.height - 170,
+                    height: MediaQuery.of(context).size.height * 0.75,
                     child: FutureBuilder<List<Marker>>(
                       future: _initializeMap(),
                       builder: (context, snapshot) {
