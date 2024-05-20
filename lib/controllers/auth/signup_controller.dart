@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/home/home.dart';
 import 'package:spoonshare/widgets/snackbar.dart';
@@ -13,7 +11,7 @@ class SignUpController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<void> signUp({
+  Future<bool> signUp({
     required String fullName,
     required String email,
     required String contactNumber,
@@ -29,13 +27,11 @@ class SignUpController {
         !_isValidInputContactNumber(contactNumber, context) ||
         !_isValidInputPassword(password, context) ||
         !_arePasswordsMatching(password, confirmPassword, context)) {
-      return;
+      return false;
     }
-
     try {
       // Create user with email and password
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -62,21 +58,26 @@ class SignUpController {
 
         // Send email verification
         await userCredential.user!.sendEmailVerification();
+
+        return true; // Indicate success
       } else {
         // Handle the case where userCredential.user is null
         _showErrorSnackbar(context, 'Error: User data is null');
+        return false;
       }
     } catch (e) {
       // Show error message
       _showErrorSnackbar(context, "Error: $e");
+      return false; // Indicate failure
     }
   }
+
 
   Future<void> signUpWithGoogle(BuildContext? context) async {
     try {
       // Trigger Google Sign In
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+      await _googleSignIn.signIn();
 
       if (googleSignInAccount == null) {
         // Google sign-in canceled
@@ -84,17 +85,17 @@ class SignUpController {
       }
 
       final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+      await googleSignInAccount.authentication;
 
       // Sign in to Firebase with Google credentials
       final OAuthCredential googleAuthCredential =
-          GoogleAuthProvider.credential(
+      GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
       UserCredential userCredential =
-          await _auth.signInWithCredential(googleAuthCredential);
+      await _auth.signInWithCredential(googleAuthCredential);
 
       // Fetch additional details from Google Sign-In
       String fullName = userCredential.user?.displayName ?? '';
