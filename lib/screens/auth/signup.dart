@@ -45,7 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       statusBarColor: kOrangeColor, // Status bar color
     ));
     return Scaffold(
-
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -53,47 +52,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top,
             ),
-            clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(color: Colors.white),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 146,
-                      padding: const EdgeInsets.only(
-                        top: 4,
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 146,
+                  padding: const EdgeInsets.only(top: 4),
+                  decoration: BoxDecoration(color: kOrangeColor),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SpoonShare',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontFamily: 'Lora',
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.12,
+                        ),
                       ),
-                      decoration:  BoxDecoration(color: kOrangeColor),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'SpoonShare',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontFamily: 'Lora',
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1.12,
-                            ),
-                          ),
-                          SizedBox(height: 3),
-                          Text(
-                            'Nourishing Lives, Creating Smiles!',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                      SizedBox(height: 3),
+                      Text(
+                        'Nourishing Lives, Creating Smiles!',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Column(
@@ -105,7 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontSize: 24,
                         fontFamily: 'Lora',
                         fontWeight: FontWeight.w700,
-                        height: 0,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -113,59 +103,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'Explore nearby food or join us\nto make a difference!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.800000011920929),
+                        color: Colors.black.withOpacity(0.8),
                         fontSize: 14,
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w500,
-                        height: 0,
                       ),
                     ),
                   ],
                 ),
-
-                // SizedBox(
-                //   width: 275,
-                //   height: 69,
-                //   child: Column(
-                //     mainAxisSize: MainAxisSize.min,
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       const Text(
-                //         'Join the movement!',
-                //         style: TextStyle(
-                //           color: Colors.black,
-                //           fontSize: 24,
-                //           fontFamily: 'Lora',
-                //           fontWeight: FontWeight.w700,
-                //           height: 0,
-                //         ),
-                //       ),
-                //       const SizedBox(height: 8),
-                //       Container(
-                //         width: 320,
-                //         height: 38,
-                //         child: Text(
-                //           'Explore nearby food or join us\nto make a difference!',
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(
-                //             color: Colors.black.withOpacity(0.800000011920929),
-                //             fontSize: 14,
-                //             fontFamily: 'DM Sans',
-                //             fontWeight: FontWeight.w500,
-                //             height: 0,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 const SizedBox(height: 16),
                 Container(
                   width: 240,
                   height: 40,
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(width: 1),
@@ -179,7 +129,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           width: 18,
@@ -199,7 +148,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             fontSize: 12,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w700,
-                            height: 0,
                           ),
                         ),
                       ],
@@ -248,8 +196,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InputField(label: 'Email', controller: _emailController),
                     const SizedBox(height: 16),
                     InputField(
-                        label: 'Contact Number',
-                        controller: _contactNumberController),
+                      label: 'Contact Number',
+                      controller: _contactNumberController,
+                    ),
                     const SizedBox(height: 16),
                     InputField(
                       label: 'Password',
@@ -273,22 +222,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 Container(
-                  margin:
-                  const EdgeInsets.only(top: 10), // Add margin to the top
+                  margin: const EdgeInsets.only(top: 10),
                   child: SizedBox(
                     width: 296,
                     child: Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
-                            text:
-                            'By signing up, you confirm that you have read and agreed to SpoonShare’s ',
+                            text: 'By signing up, you confirm that you have read and agreed to SpoonShare’s ',
                             style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 11,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
-                              height: 0,
                             ),
                           ),
                           const TextSpan(
@@ -299,7 +245,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
                               decoration: TextDecoration.underline,
-                              height: 0,
                             ),
                           ),
                           TextSpan(
@@ -309,7 +254,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontSize: 11,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
-                              height: 0,
                             ),
                           ),
                           const TextSpan(
@@ -320,7 +264,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
                               decoration: TextDecoration.underline,
-                              height: 0,
                             ),
                           ),
                         ],
@@ -330,15 +273,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(
-                      top: 20.0), // Adjust the top margin as needed
+                  margin: const EdgeInsets.only(top: 20.0),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                            const SignInScreen()), // Replace LoginScreen with the actual screen you want to navigate to
+                          builder: (context) => const SignInScreen(),
+                        ),
                       );
                     },
                     child: Text.rich(
@@ -347,12 +289,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextSpan(
                             text: 'Already have an account?',
                             style: TextStyle(
-                              color:
-                              Colors.black.withOpacity(0.699999988079071),
+                              color: Colors.black.withOpacity(0.7),
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w500,
-                              height: 0,
                             ),
                           ),
                           const TextSpan(
@@ -362,7 +302,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w500,
-                              height: 0,
                             ),
                           ),
                           TextSpan(
@@ -373,7 +312,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
                               decoration: TextDecoration.underline,
-                              height: 0,
                             ),
                           ),
                         ],
@@ -384,7 +322,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () async {
-                    // Show loading indicator
                     showLoadingDialog(context);
 
                     bool valid = await _signUpController.signUp(
@@ -396,11 +333,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       context: context,
                     );
 
-                    // Hide loading indicator
                     Navigator.of(context).pop();
 
                     if (valid) {
-                      // Navigate to HomeScreen if signup is successful
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -432,6 +367,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20), // Add spacing to avoid overflow at the bottom
               ],
             ),
           ),
@@ -513,7 +449,7 @@ class InputField extends StatelessWidget {
             ),
           ),
           const Text(
-            '*', // Asterisk symbol
+            '*',
             style: TextStyle(
               color: Color(0x99F20F0F),
               fontSize: 14,

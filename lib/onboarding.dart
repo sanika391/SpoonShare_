@@ -8,6 +8,7 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Center(
         child: SingleChildScrollView( // Added SingleChildScrollView
           child: Container(
@@ -160,7 +161,7 @@ class Onboarding extends StatelessWidget {
                         children: [
                           TextSpan(
                             text:
-                                'By signing up, you confirm that you have read and agreed to SpoopShare’s ',
+                            'By signing up, you confirm that you have read and agreed to SpoopShare’s ',
                             style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
                               fontSize: 11,
