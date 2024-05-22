@@ -8,8 +8,9 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView( // Wrap the entire content in SingleChildScrollView
-        child: Center(
+
+      body: Center(
+        child: SingleChildScrollView( // Added SingleChildScrollView
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(
@@ -21,9 +22,9 @@ class Onboarding extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: 146,
                   decoration: const BoxDecoration(color: Color(0xFFFF9F1C)),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -50,8 +51,8 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: 310,
+                  height: 290,
                   padding: const EdgeInsets.only(
                     left: 32,
                     right: 32,
@@ -95,7 +96,7 @@ class Onboarding extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF9F1C),
                     padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
@@ -151,8 +152,8 @@ class Onboarding extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 Container(
-                  margin: const EdgeInsets.only(
-                      top: 10), // Add margin to the top
+                  margin: 
+                      const EdgeInsets.only(bottom: 40), // Add margin to the top
                   child: SizedBox(
                     width: 296,
                     child: Text.rich(
