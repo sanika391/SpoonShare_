@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spoonshare/colors.dart';
-// import 'package:spoonshare/screens/home/home_page.dart';
+import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/screens/home/home.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const HomePage(name: 'aman', role: 'student',),
       ));
     });
   }
