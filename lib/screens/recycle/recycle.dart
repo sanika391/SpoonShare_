@@ -154,46 +154,49 @@ class RecycleScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => const RecycleFoodScreen(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 200,
-                          height: 40,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF06D801),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'REQUEST PICKUP',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontFamily: 'DM Sans',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                  letterSpacing: 1.95,
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => const RecycleFoodScreen(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 200,
+                              height: 40,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 12),
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFF06D801),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'REQUEST PICKUP',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontFamily: 'DM Sans',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0,
+                                      letterSpacing: 1.95,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
                       )
                     ],
                   ),

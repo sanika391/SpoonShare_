@@ -115,7 +115,9 @@ class _DashboardPageState extends State<DashboardPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Share Food
-                        GestureDetector(
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -151,10 +153,12 @@ class _DashboardPageState extends State<DashboardPage> {
                               ),
                             ],
                           ),
-                        ),
+                        ) ),
                         const SizedBox(width: 27),
                         // Donate Food
-                        GestureDetector(
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -189,7 +193,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               ),
                             ],
                           ),
-                        ),
+                        ) ),
                       ],
                     ),
                   ],

@@ -115,7 +115,9 @@ class _DonatePageState extends State<DonatePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Share Food
-                        GestureDetector(
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -152,10 +154,12 @@ class _DonatePageState extends State<DonatePage> {
                               ),
                             ],
                           ),
-                        ),
+                        ) ),
                         const SizedBox(width: 27),
                         // Donate Food
-                        GestureDetector(
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -192,7 +196,7 @@ class _DonatePageState extends State<DonatePage> {
                               ),
                             ],
                           ),
-                        ),
+                        ) ),
                       ],
                     ),
                   ],

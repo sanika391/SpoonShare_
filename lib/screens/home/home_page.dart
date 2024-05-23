@@ -106,11 +106,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
+              /*MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  GestureDetector(
+                  Expanded(
+                      child: GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = 0; // Update selected index
@@ -129,9 +132,11 @@ class _HomePageState extends State<HomePage> {
                         letterSpacing: 0.60,
                       ),
                     ),
+                    )
                   ),
                   const SizedBox(width: 8),
-                  GestureDetector(
+                  Expanded(
+                    child: GestureDetector(
                     onTap: () {
                       setState(() {
                         selectedIndex = 1; // Update selected index
@@ -150,9 +155,91 @@ class _HomePageState extends State<HomePage> {
                         letterSpacing: 0.60,
                       ),
                     ),
+                  )
                   ),
                 ],
+              ) ),*/
+
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = 0; // Update selected index
+                          });
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: selectedIndex == 0 ? Colors.transparent : Colors.transparent,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'RECENTLY UPLOADED',
+                            style: TextStyle(
+                              color: selectedIndex == 0
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.6),
+                              fontSize: 14,
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                              letterSpacing: 0.60,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = 1; // Update selected index
+                          });
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: selectedIndex == 1 ? Colors.transparent : Colors.transparent,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'DAILY ACTIVE',
+                            style: TextStyle(
+                              color: selectedIndex == 1
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.6),
+                              fontSize: 14,
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                              letterSpacing: 0.60,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+
               const SizedBox(height: 14),
               Row(
                 children: [
