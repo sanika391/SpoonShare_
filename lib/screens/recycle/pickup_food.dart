@@ -621,6 +621,7 @@ class RecycleFoodScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const BottomNavBar());
+        // bottomNavigationBar: const BottomNavBar()
+      );
   }
 }
