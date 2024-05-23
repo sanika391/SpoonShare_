@@ -215,7 +215,7 @@ class _DonatePageState extends State<DonatePage> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      // bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

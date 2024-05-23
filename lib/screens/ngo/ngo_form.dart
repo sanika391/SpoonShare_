@@ -359,7 +359,7 @@ class NGOFormScreenState extends State<NGOFormScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      // bottomNavigationBar: const BottomNavBar(),
     );
   }
 

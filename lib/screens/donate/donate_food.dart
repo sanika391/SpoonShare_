@@ -621,7 +621,6 @@ class DonateFoodScreen extends StatelessWidget {
             ),
           ),
         ),
-              bottomNavigationBar: const BottomNavBar(),
-);
+    );
   }
 }

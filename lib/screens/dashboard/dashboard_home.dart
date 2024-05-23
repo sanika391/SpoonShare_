@@ -3,58 +3,46 @@ import 'package:spoonshare/screens/admin/admin_home.dart';
 import 'package:spoonshare/screens/dashboard/dashboard_page.dart';
 import 'package:spoonshare/screens/ngo/ngo_home.dart';
 import 'package:spoonshare/screens/volunteer/volunteer_home.dart';
-import 'package:spoonshare/widgets/bottom_navbar.dart';
 
-class DashboardHomePage extends StatelessWidget {
+class DashboardHomePage extends StatefulWidget {
   final String role;
 
   const DashboardHomePage({Key? key, required this.role}) : super(key: key);
 
-  void navigateToRoleScreen(BuildContext context) {
-    switch (role) {
+  @override
+  _DashboardHomePageState createState() => _DashboardHomePageState();
+}
+
+class _DashboardHomePageState extends State<DashboardHomePage> {
+  late Widget screen;
+
+  @override
+  void initState() {
+    super.initState();
+    _navigateToRoleScreen();
+  }
+
+  void _navigateToRoleScreen() {
+    switch (widget.role) {
       case 'Volunteer':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VolunteerHomeScreen(),
-          ),
-        );
+        screen = const VolunteerHomeScreen();
         break;
       case 'NGO':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const NGOHomeScreen(),
-          ),
-        );
+        screen = const NGOHomeScreen();
         break;
       case 'Admin':
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const AdminHomeScreen(),
-          ),
-        );
+        screen = const AdminHomeScreen();
         break;
       default:
-       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const DashboardPage(),
-          ),
-        );
+        screen = const DashboardPage();
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      navigateToRoleScreen(context);
-    });
-
     return Scaffold(
-      body: Container(
+      body: (screen.toString().isEmpty) ? Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height - 80,
         padding: EdgeInsets.only(
@@ -65,7 +53,7 @@ class DashboardHomePage extends StatelessWidget {
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(), // Show a loading indicator while navigating
+            CircularProgressIndicator(),
             SizedBox(height: 16),
             Text(
               'Redirecting...',
@@ -76,8 +64,7 @@ class DashboardHomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: const BottomNavBar(),
+      ) : screen,
     );
   }
 }
