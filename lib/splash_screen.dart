@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spoonshare/colors.dart';
-// import 'package:spoonshare/screens/home/home_page.dart';
+import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/screens/home/home.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

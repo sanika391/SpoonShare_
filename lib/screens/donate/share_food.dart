@@ -99,16 +99,12 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
     bool showExpandedList =
         _addressController.text.isNotEmpty && !_addressSelected;
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
-              _buildImageUploadBox(),
               const SizedBox(height: 16),
+              _buildImageUploadBox(),
+              const SizedBox(height: 24),
               CustomTextField(
                 label: 'Venue*',
                 controller: _venueController,
@@ -161,10 +157,8 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
               _buildDailyActivityCheckbox(),
               _buildSubmitButton(),
             ],
-          ),
-        ),
-      ),
-    );
+          );
+
   }
   Widget _buildDailyActivityCheckbox() {
     return Row(
