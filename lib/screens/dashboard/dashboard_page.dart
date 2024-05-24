@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/ngo/ngo_form.dart';
 import 'package:spoonshare/screens/volunteer/volunteer_form.dart';
-import 'package:spoonshare/widgets/bottom_navbar.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -16,10 +15,12 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - 80,
+        width: width,
+        height: height,
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
         ),
@@ -33,7 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 146,
+                    height: height/4,
                     padding: const EdgeInsets.only(
                       top: 4,
                     ),
@@ -66,10 +67,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+          
+              SizedBox(height: width/10),
+          
               SizedBox(
-                width: 300,
-                height: 69,
+                width: width,
+                height: height/12,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -85,9 +88,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         height: 0,
                       ),
                     ),
-                    const SizedBox(height: 2),
+          
+                    const SizedBox(height: 5,),
+          
                     SizedBox(
-                      width: 275,
+                      width: width,
                       child: Text(
                         'Volunteer with a Smile, Empower with Heart!',
                         textAlign: TextAlign.center,
@@ -103,100 +108,104 @@ class _DashboardPageState extends State<DashboardPage> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 32,
-              ),
+          
               SizedBox(
-                width: 275,
+                height: width/18,
+              ),
+          
+              SizedBox(
+                width: height,
                 height: 140,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Share Food
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const VolunteerFormScreen(),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 108,
-                                height: 106,
-                                decoration: const ShapeDecoration(
-                                  color: Color(0xFFFF9F1C),
-                                  shape: CircleBorder(),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // Share Food
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const VolunteerFormScreen(),
                                 ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Image.asset(
-                                      "assets/images/volunteer.png"),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 108,
+                                  height: 106,
+                                  decoration: const ShapeDecoration(
+                                    color: Color(0xFFFF9F1C),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Image.asset(
+                                        "assets/images/volunteer.png"),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'Become a Volunteer',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Lora',
-                                  fontWeight: FontWeight.w700,
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Become a Volunteer',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'Lora',
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 27),
-                        // Donate Food
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const NGOFormScreen(),
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 108,
-                                height: 106,
-                                decoration: const ShapeDecoration(
-                                  color: Color(0xFFFF9F1C),
-                                  shape: CircleBorder(),
+                          // const SizedBox(width: 27),
+                          // Donate Food
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const NGOFormScreen(),
                                 ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Image.asset("assets/images/ngo.png"),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 108,
+                                  height: 106,
+                                  decoration: const ShapeDecoration(
+                                    color: Color(0xFFFF9F1C),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Image.asset("assets/images/ngo.png"),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'Join us as NGO',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Lora',
-                                  fontWeight: FontWeight.w700,
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Join us as NGO',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'Lora',
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 24,
+                height: 14,
               ),
               Container(
                 width: 320,
@@ -212,7 +221,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
-      // bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
