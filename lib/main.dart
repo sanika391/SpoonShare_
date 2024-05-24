@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:spoonshare/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spoonshare/screens/dashboard/dashboard_home.dart';
+import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/splash_screen.dart';
 
 void main() async {
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: const HomePage(name: '', role: ''),
       debugShowCheckedModeBanner: false,
     );
   }

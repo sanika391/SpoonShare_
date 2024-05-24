@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spoonshare/screens/donate/donate_food.dart';
 import 'package:spoonshare/screens/donate/share_food.dart';
-import 'package:spoonshare/widgets/bottom_navbar.dart';
 
 class DonatePage extends StatefulWidget {
   const DonatePage({Key? key}) : super(key: key);
@@ -16,6 +15,8 @@ class _DonatePageState extends State<DonatePage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -51,7 +52,9 @@ class _DonatePageState extends State<DonatePage> {
                             letterSpacing: 1.12,
                           ),
                         ),
+
                         SizedBox(height: 3),
+
                         Text(
                           'Nourishing Lives, Creating Smiles!',
                           style: TextStyle(
@@ -67,9 +70,10 @@ class _DonatePageState extends State<DonatePage> {
                 ],
               ),
               const SizedBox(height: 32),
+
               SizedBox(
-                width: 275,
-                height: 69,
+                width: width,
+                height: width/3.5,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -85,9 +89,10 @@ class _DonatePageState extends State<DonatePage> {
                         height: 0,
                       ),
                     ),
-                    const SizedBox(height: 2),
+
+                    const SizedBox(height: 12),
+                    
                     SizedBox(
-                      width: 275,
                       child: Text(
                         'Explore nearby food or join us to make a difference!',
                         textAlign: TextAlign.center,
@@ -103,16 +108,18 @@ class _DonatePageState extends State<DonatePage> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 32,
-              ),
+
+              // const SizedBox(
+              //   height: 2,
+              // ),
+
               SizedBox(
-                width: 275,
+                width: height,
                 height: 140,
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         // Share Food
                         GestureDetector(
@@ -180,7 +187,9 @@ class _DonatePageState extends State<DonatePage> {
                                       "assets/images/donate_food.png"),
                                 ),
                               ),
+
                               const SizedBox(height: 8),
+
                               const Text(
                                 'Donate Food',
                                 style: TextStyle(
@@ -198,9 +207,11 @@ class _DonatePageState extends State<DonatePage> {
                   ],
                 ),
               ),
+
               const SizedBox(
-                height: 24,
+                height: 14,
               ),
+
               Container(
                 width: 320,
                 height: 300,
