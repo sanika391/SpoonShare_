@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spoonshare/models/users/user.dart';
@@ -46,6 +48,10 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
   String tokenForSession = "12345";
   List<Map<String, dynamic>> listForPlaces = [];
   var uuid = const Uuid();
+  LatLng? _selectedPosition;
+  late GoogleMapController googleMapControllerForGetLanLon;
+  Set<Marker> _marker = Set();
+  bool mapClicked = false;
 
   Future<void> makeSuggestions(String input) async {
     try {
@@ -79,23 +85,29 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
     makeSuggestions(_addressController.text);
   }
 
-  Future<void> handleListItemTap(int index) async {
-    String placeId = listForPlaces[index]['place_id'];
-    var placeDetails = await PlaceApi.getPlaceDetails(placeId);
-    double selectedLat = placeDetails['geometry']['location']['lat'];
-    double selectedLng = placeDetails['geometry']['location']['lng'];
-    String selectedAddress = listForPlaces[index]['description'];
-    print(selectedAddress);
-    print(selectedLat);
-    print(selectedLng);
-
+  _onMapCreated(GoogleMapController controller) {
+    googleMapControllerForGetLanLon = controller;
+  }
+  void _onTapGoogleMap(LatLng position) {
     setState(() {
-      _addressController.text = selectedAddress;
-      lat =
-          selectedLat; // Update the class-level variables with the selected values
-      lng = selectedLng;
-      _addressSelected = true; // Set _addressSelected to true
+      mapClicked = true;
+      _marker.clear();
+      _marker.add(
+        Marker(
+          markerId: MarkerId(position.toString()),
+          position: position,
+          infoWindow: InfoWindow(
+            title: 'Selected Location',
+            snippet: '${position.latitude}, ${position.longitude}',
+          ),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        ),
+      );
+      _selectedPosition = position;
     });
+    lat = _selectedPosition!.latitude;
+    lng = _selectedPosition!.longitude;
+    print('Selected Position Latitude : $lat Longitude : $lng');
   }
 
   @override
@@ -108,46 +120,40 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
         const SizedBox(height: 16),
         _buildImageUploadBox(),
         const SizedBox(
-          height: 8,
+          height: 16,
         ),
-        const SizedBox(height: 16),
-        CustomTextField(
-          label: 'Pickup Location*',
-          controller: _pickuplocationController,
-        ),
-        const SizedBox(height: 16),
-        CustomTextField(
-            label: "Pickup Address*", controller: _addressController),
-        if (showExpandedList)
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: ListView.builder(
-              itemCount: listForPlaces.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () async {
-                    _addressSelected = true;
-                    await handleListItemTap(index);
-                  },
-                  title: Text(
-                    listForPlaces[index]['description'],
-                  ),
-                );
-              },
+
+        const Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            "Select your location*",
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
             ),
           ),
+        ),
+        SizedBox(
+          height: 500,
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(13.076935, 80.260484), // Set your initial camera position
+            ),
+            onTap: _onTapGoogleMap,
+            markers: _marker,
+          ),
+        ),
+        const SizedBox(height: 16),
+        mapClicked ?
+        Text(
+            "Latitude :$lat Longitude :$lng",
+            style: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+        ) :
+        const Padding(padding: EdgeInsets.zero),
         const SizedBox(height: 16),
         CustomTextField(
           label: 'Food Life*',
@@ -454,8 +460,8 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
       String userId = FirebaseAuth.instance.currentUser!.uid;
       UserProfile userProfile = UserProfile();
       String fullName = userProfile.getFullName();
-      String pickup = _pickuplocationController.text;
-      String address = _addressController.text;
+      // String pickup = _pickuplocationController.text; // No need of this, because we have used a Google map to get a location
+      // String address = _addressController.text; // No need of this, because we have used a Google map to get a location
       String foodlife = _foodlifeController.text;
       String fooddescription = _fooddescriptionController.text;
       String foodquantity = _foodquantityController.text;
@@ -471,8 +477,8 @@ class _DonateFoodScreenContentState extends State<DonateFoodScreenContent> {
       Map<String, dynamic> foodData = {
         'userId': userId,
         'fullName': fullName,
-        'pickup': pickup,
-        'address': address,
+        // 'pickup': pickup, // No need of this, because we have used a Google map to get a location
+        // 'address': address,
         'image': imageurl,
         'location': location,
         'foodlife': foodlife,
