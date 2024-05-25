@@ -3,10 +3,11 @@ import 'package:spoonshare/screens/recycle/pickup_food.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 
 class RecycleScreen extends StatelessWidget {
-  const RecycleScreen({Key? key});
+  const RecycleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: Center(
         child: Container(
@@ -39,7 +40,9 @@ class RecycleScreen extends StatelessWidget {
                           width: 42,
                           height: 42,
                           decoration: ShapeDecoration(
-                            color: Colors.black.withOpacity(0.08),
+                            color: isDarkMode
+                                ? Colors.white.withOpacity(0.1)
+                                : Colors.black.withOpacity(0.08),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
@@ -76,7 +79,9 @@ class RecycleScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 1,
-                        color: Colors.black.withOpacity(0.1),
+                        color: isDarkMode
+                            ? Colors.white.withOpacity(0.1)
+                            : Colors.black.withOpacity(0.08),
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -105,7 +110,7 @@ class RecycleScreen extends StatelessWidget {
                               TextSpan(
                                 text: 'The Most Reliable & Efficient ',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 20,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.bold,
@@ -125,7 +130,7 @@ class RecycleScreen extends StatelessWidget {
                               TextSpan(
                                 text: '.',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 20,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.w700,
@@ -144,7 +149,7 @@ class RecycleScreen extends StatelessWidget {
                           'We are committed to providing you with the best waste disposal service. We are reliable, efficient and always on time.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.black,
+                            // color: Colors.black,
                             fontSize: 14,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w400,
@@ -159,7 +164,8 @@ class RecycleScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => const RecycleFoodScreen(),
+                              builder: (BuildContext context) =>
+                                  const RecycleFoodScreen(),
                             ),
                           );
                         },

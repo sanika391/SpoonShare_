@@ -15,6 +15,12 @@ class _DonatePageState extends State<DonatePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final secondaryTextColor = isDarkMode
+        ? Colors.white.withOpacity(0.8)
+        : Colors.black.withOpacity(0.8);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -25,7 +31,7 @@ class _DonatePageState extends State<DonatePage> {
           top: MediaQuery.of(context).padding.top,
         ),
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: backgroundColor),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,20 +51,18 @@ class _DonatePageState extends State<DonatePage> {
                         Text(
                           'SpoonShare',
                           style: TextStyle(
-                            color: Colors.white,
+                            // color: Colors.white,
                             fontSize: 28,
                             fontFamily: 'Lora',
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1.12,
                           ),
                         ),
-
                         SizedBox(height: 3),
-
                         Text(
                           'Nourishing Lives, Creating Smiles!',
                           style: TextStyle(
-                            color: Colors.white,
+                            // color: Colors.white,
                             fontSize: 14,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w500,
@@ -73,31 +77,29 @@ class _DonatePageState extends State<DonatePage> {
 
               SizedBox(
                 width: width,
-                height: width/3.5,
-                child: Column(
+                height: width / 3.5,
+                child: const Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       '“Join Spoon Share”',
                       style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 24,
                         fontFamily: 'Lora',
                         fontWeight: FontWeight.bold,
                         height: 0,
                       ),
                     ),
-
-                    const SizedBox(height: 12),
-                    
+                    SizedBox(height: 12),
                     SizedBox(
                       child: Text(
                         'Explore nearby food or join us to make a difference!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.800000011920929),
+                          // color: Colors.black.withOpacity(0.800000011920929),
                           fontSize: 14,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w500,
@@ -151,7 +153,7 @@ class _DonatePageState extends State<DonatePage> {
                               const Text(
                                 'Share Free Food',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.w700,
@@ -187,13 +189,11 @@ class _DonatePageState extends State<DonatePage> {
                                       "assets/images/donate_food.png"),
                                 ),
                               ),
-
                               const SizedBox(height: 8),
-
                               const Text(
                                 'Donate Food',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  // color: Colors.black,
                                   fontSize: 14,
                                   fontFamily: 'Lora',
                                   fontWeight: FontWeight.w700,

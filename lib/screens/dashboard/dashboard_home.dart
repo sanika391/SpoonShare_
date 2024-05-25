@@ -41,30 +41,39 @@ class _DashboardHomePageState extends State<DashboardHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
     return Scaffold(
-      body: (screen.toString().isEmpty) ? Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - 80,
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Colors.white),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 16),
-            Text(
-              'Redirecting...',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      body: (screen.toString().isEmpty)
+          ? Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 80,
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
               ),
-            ),
-          ],
-        ),
-      ) : screen,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(color: backgroundColor),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: textColor,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Redirecting...',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : screen,
     );
   }
 }
