@@ -17,6 +17,12 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final secondaryTextColor =
+        isDarkMode ? Colors.white70 : Colors.black.withOpacity(0.8);
     return Scaffold(
       body: Container(
         width: width,
@@ -25,7 +31,7 @@ class _DashboardPageState extends State<DashboardPage> {
           top: MediaQuery.of(context).padding.top,
         ),
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: BoxDecoration(color: backgroundColor),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -78,10 +84,10 @@ class _DashboardPageState extends State<DashboardPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       '“Join Spoon Share Family”',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: textColor,
                         fontSize: 24,
                         fontFamily: 'Lora',
                         fontWeight: FontWeight.bold,
@@ -97,7 +103,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Volunteer with a Smile, Empower with Heart!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black.withOpacity(0.800000011920929),
+                          color: secondaryTextColor,
                           fontSize: 14,
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w500,
@@ -148,10 +154,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text(
+                                Text(
                                   'Become a Volunteer',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: textColor,
                                     fontSize: 14,
                                     fontFamily: 'Lora',
                                     fontWeight: FontWeight.w700,
@@ -186,10 +192,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text(
+                                Text(
                                   'Join us as NGO',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: textColor,
                                     fontSize: 14,
                                     fontFamily: 'Lora',
                                     fontWeight: FontWeight.w700,
