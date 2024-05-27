@@ -498,7 +498,7 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
           .collection("foodData")
           .add(foodData);
 
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       showSuccessSnackbar(context, 'Food submitted successfully!');
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ThankYouScreen()));

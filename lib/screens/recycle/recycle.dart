@@ -161,7 +161,7 @@ class RecycleScreen extends StatelessWidget {
                       const SizedBox(height: 50),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
