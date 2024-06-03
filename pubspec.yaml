@@ -18,7 +18,7 @@ dependencies:
   google_sign_in: ^6.2.1
   persistent_bottom_nav_bar: ^5.0.2
   image_picker: ^1.1.2
-  firebase_storage: ^11.6.0
+  firebase_storage: ^11.7.7
   permission_handler: ^11.2.0
   flutter_launcher_icons: ^0.13.1
   device_info_plus: ^9.1.1
