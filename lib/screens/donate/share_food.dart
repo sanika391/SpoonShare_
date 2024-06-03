@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:spoonshare/models/users/user.dart';
 import 'package:spoonshare/screens/donate/thank_you.dart';
+import 'package:spoonshare/utils/extract_exif_data.dart';
 import 'package:spoonshare/widgets/auto_complete.dart';
 import 'package:spoonshare/widgets/bottom_navbar.dart';
 import 'package:spoonshare/widgets/custom_text_field.dart';
@@ -42,6 +43,7 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
   String tokenForSession = "12345";
   List<Map<String, dynamic>> listForPlaces = [];
   var uuid = const Uuid();
+  int imageDecider = 10;
 
   Future<void> makeSuggestions(String input) async {
     try {
@@ -432,7 +434,6 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
     });
 
     if (allAccepted) {
-      // Show options for gallery or camera
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -443,7 +444,9 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
                 title: const Text('Pick from Gallery'),
                 onTap: () async {
                   Navigator.of(context).pop();
+                  print("Flag 1");
                   await _pickImage(ImageSource.gallery);
+                  print("Flag 2");
                 },
               ),
               ListTile(
@@ -469,10 +472,68 @@ class _ShareFoodScreenContentState extends State<ShareFoodScreenContent> {
     );
 
     if (pickedImage != null) {
+      print("Flag 3");
       _imageFile = File(pickedImage.path);
       _imageController.text = _imageFile!.path;
-      setState(() {});
+      print("Flag 4");
+      setState(() {
+        print("Flag 5");
+      });
+      try {
+        print(_imageFile!.path);
+        imageDecider = await ExtractExifData.extractInformation(_imageFile!.path);
+      } catch (e) {
+        print("Error : $e");
+      }
+      print(imageDecider);
+      if (imageDecider == 2) {
+        setState(() {
+          _imageController.text = "";
+        });
+        _showAlertDialog("This Image was not a recent one");
+      } else if (imageDecider == 3) {
+        setState(() {
+          _imageController.text = "";
+        });
+        _showAlertDialog("This Image is not a valid one");
+      }
     }
+  }
+
+
+
+  Future _showAlertDialog(String message) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "IMPORTANT MESSAGE",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: "DM sans"
+              ),
+            ),
+            content: Text(
+              message,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: "Lora"
+              ),
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              )
+            ],
+          );
+        }
+    );
   }
 
   Widget _buildSubmitButton() {
