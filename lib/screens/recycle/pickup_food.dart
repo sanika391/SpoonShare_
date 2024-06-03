@@ -18,6 +18,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:uuid/uuid.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 
+import '../../utils/extract_exif_data.dart';
+
 class RecycleFoodScreenContent extends StatefulWidget {
   const RecycleFoodScreenContent({super.key});
 
@@ -47,6 +49,7 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
   String tokenForSession = "12345";
   List<Map<String, dynamic>> listForPlaces = [];
   var uuid = const Uuid();
+  int imageDecider = 10;
 
   Future<void> makeSuggestions(String input) async {
     try {
@@ -365,7 +368,6 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
     });
 
     if (allAccepted) {
-      // Show options for gallery or camera
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -402,10 +404,62 @@ class _RecycleFoodScreenContentState extends State<RecycleFoodScreenContent> {
     );
 
     if (pickedImage != null) {
+      print("Flag 3");
       _imageFile = File(pickedImage.path);
       _imageController.text = _imageFile!.path;
-      setState(() {});
+      print("Flag 4");
+      setState(() {
+        print("Flag 5");
+      });
+      try {
+        print(_imageFile!.path);
+        imageDecider = await ExtractExifData.extractInformation(_imageFile!.path);
+      } catch (e) {
+        print("Error : $e");
+      }
+      print(imageDecider);
+      if (imageDecider == 2) {
+        _showAlertDialog("This Image was not a recent one, So please change the image");
+      } else if (imageDecider == 3) {
+        _showAlertDialog("This Image is not a valid one, So please change the image");
+      }
     }
+  }
+
+
+
+  Future _showAlertDialog(String message) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "IMPORTANT MESSAGE",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: "DM sans"
+              ),
+            ),
+            content: Text(
+              message,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: "Lora"
+              ),
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("OK"),
+              )
+            ],
+          );
+        }
+    );
   }
 
   Widget _buildSubmitButton() {
