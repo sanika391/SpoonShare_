@@ -226,7 +226,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
                               onTap: () {
@@ -235,20 +235,17 @@ class _SignInScreenState extends State<SignInScreen> {
                                       builder: (context) => ForgotPasswordScreen()),
                                 );
                               },
-                              child: const Align(
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 8.0, right: 36.0),
-                                  child: Text(
-                                    'forgot password?',
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 15,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w500,
-                                      textBaseline: TextBaseline.alphabetic,
-                                      height: 0,
-                                    ),
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.0, right: 36.0),
+                                child: Text(
+                                  'forgot password?',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    height: 0,
                                   ),
                                 ),
                               ),
