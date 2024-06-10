@@ -35,6 +35,7 @@ You can download these files from the following links:
 - [google-services.json](https://drive.google.com/drive/folders/16JjJ-FC_-CMKyd1OO5Nejc1W44c6fM9y?usp=drive_link)
 
 ## Installation
+
 To install and run the project, follow these steps:
 1. Clone this repository to your local machine.
 2. Place the downloaded `firebase_options.dart` file in the `lib` folder.
@@ -42,14 +43,61 @@ To install and run the project, follow these steps:
 
 ## Setup
 
-To Setup this project run
+### With Docker
+
+1. Clone the repository:
+```bash
+git clone https://github.com/shuence/SpoonShare
+```
+2. Navigate to the project directory:
+```bash
+cd SpoonShare
+```
+3. Build docker Image (only needed during first installation)
+```bash
+docker build -t spoonshare:latest .     
+```
+4. Run docker image
+```bash
+docker run -d -p 80:80 spoonshare:latest
+```
+The app should now be running at [http://localhost:80](http://localhost:80).
+
+### With Docker Compose
+
+1. Clone the repository:
+```bash
+git clone https://github.com/shuence/SpoonShare
+```
+2. Navigate to the project directory:
+```bash
+cd SpoonShare
+```
+3. Build docker-compose (only needed during first installation)
+```bash
+docker-compose up --build               
+```
+4. Run docker-compose
+```bash
+docker-compose up
+```
+The app should now be running at [http://localhost:80](http://localhost:80).
+
+### Without Docker
 
 ```bash
 git clone https://github.com/shuence/SpoonShare
+```
+```bash
 cd SpoonShare
+```
+```bash
 flutter pub get
+```
+```bash
 flutter run
 ```
+
 ## Resources
 
 - [Flutter Docs](https://docs.flutter.dev/)
