@@ -20,6 +20,8 @@
 
 Join us in the mission to minimize food waste, foster community engagement, and make a positive impact on the world!
 
+Spoon Share is an Android app that fights food insecurity by connecting surplus food donors with those in need. Our goal is to reduce food waste, tackle child malnutrition, and promote sustainability. Join us in achieving UN Sustainable Development Goals 1 *(No Poverty)* and 2 *(Zero Hunger)* by 2030. Together, let's make a meaningful impact on food distribution and well-being.
+
 # SpoonShare Project
 
 ## Intro To SpoonShare Video
