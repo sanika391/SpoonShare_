@@ -156,17 +156,8 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
   - Users can join as volunteers or NGOs, contributing to community welfare and fostering a sense of social responsibility.
 
 ## Tech Stack
-**Technologies involved/used:**
-- **Flutter:** Google's UI toolkit for cross-platform app development.
-- **Firebase:** Google's platform for authentication, database, and cloud services.
-- **Google Maps API:** Integrates dynamic maps and location-based services.
-- **Google Cloud:** Offers scalable cloud services and machine learning.
-- **Android Studio:** Official IDE for Android development.
-- **Web (HTML, CSS, JS):** Standard web technologies for UI.
-- **Google Maps:** Web mapping service for interactive maps.
-- **Google API:** Collection of APIs for diverse services.
-- **Google Sign-In:** Authentication using Google credentials.
-- **Google Map Places API:** For address auto-complete and showing location on map.
+
+![Archtectural-diagram.png](https://i.postimg.cc/x1Xf3tBh/TECH-STACK.png)
 
 
 # SpoonShare Project Implementation Overview
