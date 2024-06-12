@@ -47,7 +47,7 @@ To install and run the project, follow these steps:
 2. Place the downloaded `firebase_options.dart` file in the `lib` folder.
 3. Place the downloaded `google-services.json` file in the `android/app/` directory.
 
-## Setup
+## Setup:
 
 ### With Docker
 
