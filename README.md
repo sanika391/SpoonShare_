@@ -1,6 +1,6 @@
 # SpoonShare 🥣
 
-## 💡 Introduction
+## 💡 Introduction:
 
 **Problem Statement**: Inadequate surplus food distribution generates hunger, necessitating a comprehensive solution. Our project addresses this challenge through an innovative platform, connecting donors with recipients to bridge the gap in food distribution.
 
