@@ -7,7 +7,7 @@
 **Solution**: Spoon Share is an Android app tackling food insecurity by connecting surplus food donors with individuals and NGOs in need. Our platform reduces food waste, promotes sustainability, and supports the UN's Sustainable Development Goals of No Poverty and Zero Hunger by 2030. With real-time food listings, volunteer networks, and collaborative partnerships, Spoon Share empowers communities to make a positive impact on food distribution and well-being.
 
 
-## Live Preview
+## Live Preview-
 
 **Download the APK:**
 
