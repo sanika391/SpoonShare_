@@ -7,7 +7,29 @@ import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/splash_screen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'screens/home/home_page.dart';
+import 'package:flutter/material.dart';
+import 'chatbot_screen.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'SpoonShare',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomeScreen(),  // Your home screen
+      routes: {
+        '/chatbot': (context) => ChatBotScreen(),
+      },
+    );
+  }
+}
+Navigator.pushNamed(context, '/chatbot');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
