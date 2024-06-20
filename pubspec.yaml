@@ -49,6 +49,7 @@ flutter:
 
   assets:
    - assets/images/
+   - assets/dialogflow_credentials.json
 
   fonts:
     - family: Lora
