@@ -1,40 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:spoonshare/firebase_options.dart';
+//import 'package:spoonshare/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spoonshare/screens/dashboard/dashboard_home.dart';
 import 'package:spoonshare/screens/home/home_page.dart';
 import 'package:spoonshare/splash_screen.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'chatbotscreen.dart';
+import 'screens/home/home.dart';
 import 'screens/home/home_page.dart';
 import 'package:flutter/material.dart';
-import 'chatbot_screen.dart';
+//import 'chatbot_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SpoonShare',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),  // Your home screen
-      routes: {
-        '/chatbot': (context) => ChatBotScreen(),
-      },
-    );
-  }
-}
-Navigator.pushNamed(context, '/chatbot');
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'SpoonShare',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: HomeScreen(),  // Your home screen
+//       routes: {
+//         '/chatbot': (context) => ChatBotScreen(),
+//       },
+//     );
+//   }
+// }
+// Navigator.pushNamed(context, '/chatbot');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
+  runApp(MyApp());
   await SharedPreferences.getInstance();
 
   runApp(const MyApp());
@@ -50,14 +51,22 @@ class MyApp extends StatelessWidget {
       dark: ThemeData.dark(useMaterial3: true),
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
-        title: 'Spoon Share',
+        title: 'SpoonShare',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: HomeScreen(), // Your home screen
+        routes: {
+          '/chatbot': (context) => ChatBotScreen(),
+        },
+        // title: 'Spoon Share',
         // theme: ThemeData(
         //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         //   useMaterial3: true,
         // ),
-        theme: theme,
+        //theme: theme,
         darkTheme: darkTheme,
-        home: const HomePage(name: '', role: ''),
+        //home: const HomePage(name: '', role: ''),
         debugShowCheckedModeBanner: false,
       ),
     );

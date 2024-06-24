@@ -119,21 +119,23 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
       isValid = false;
     }
 
-    if (!emailRegex.hasMatch(_emailController.text)) {
+    if (!emailRegex.hasMatch(_emailController.text.trim())) {
       isValid = false;
       showErrorSnackbar(context, 'Please enter a valid email address');
     }
 
-    if (!mobileRegex.hasMatch(_mobileNoController.text)) {
+    if (!mobileRegex.hasMatch(_mobileNoController.text.trim())) {
       isValid = false;
       showErrorSnackbar(context, 'Please enter a valid mobile number');
     }
 
     if (_selectedGender == null) {
+      showErrorSnackbar(context, 'Please select your gender');
       isValid = false;
     }
 
     if (_selectedBirthday == null) {
+      showErrorSnackbar(context, 'Please select your birthday');
       isValid = false;
     }
 
@@ -150,6 +152,7 @@ class _VolunteerFormScreenState extends State<VolunteerFormScreen> {
     }
 
     if (_selectedNGO == null) {
+      showErrorSnackbar(context, 'Please select an NGO');
       isValid = false;
     }
 
