@@ -1,8 +1,4 @@
-📜 **Contributing Guidelines:**
-This document will guide you through the process of contributing to our repository. We value the time and effort of our contributors, and we strive to create an inclusive and collaborative community. We are happy to welcome all the contributions from anyone willing to improve/add new scripts to this project. Thank you for helping out and remember, no contribution is too small.
-Please note we have a code of conduct please follow it in all your interactions with the project.
-
-### 🔁Steps to Contribute 
+### Steps to Contribute 
 
 1. **Fork the repository:**
    Click on the "Fork" button at the top-right corner of this page. This will create a copy of this repository in your account.
@@ -93,44 +89,5 @@ Please note we have a code of conduct please follow it in all your interactions 
 9. **Wait for Review:**
     Your pull request will now be available for review by the project maintainers. They may provide feedback or ask for changes before merging your pull request into the main branch of the ResourceHub repository.
 
-**📈 Development Workflow**
-When working on the project, please follow these guidelines:
-
-1. Always work on a new branch for each separate issue or feature.
-2. Keep your branch up to date with the main repository's master branch.
-3. Write clear and descriptive commit messages.
-4. Test your changes thoroughly before submitting a pull request.
-5. Keep discussions polite and respectful.
-
-Need Help regarding some basics? 🤔
-
-You can refer to the following articles on basics of Git and Github and also contact the Project Mentors, in case you are stuck:
-- [Forking a Repo](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
-- [Cloning a Repo](https://help.github.com/en/desktop/contributing-to-projects/creating-an-issue-or-pull-request)
-- [How to create a Pull Request](https://opensource.com/article/19/7/create-pull-request-github)
-- [Getting started with Git and GitHub](https://towardsdatascience.com/getting-started-with-git-and-github-6fcd0f2d4ac6)
-- [Learn GitHub from Scratch](https://docs.github.com/en/get-started/start-your-journey/git-and-github-learning-resources)
-
-  ## **🚀Pull Request Process 🚀**
-
-1. Ensure that you have self reviewed your code.
-2. Make sure you have added the proper description for the functionality of the code.
-3. I have commented my code, particularly in hard-to-understand areas.
-4. Add screenshot it help in review.
-5. Submit your PR by giving the necesarry information in PR template and hang tight we will review it really soon.
-
-
-## ✅ Code Reviews ✅
-- Be open to feedback and constructive criticism from other contributors.
-- Participate in code reviews by reviewing and providing feedback.
-- Don't be afraid to ask questions about the code's intent or approach.
-- Once the identified issues are addressed, provide approval for the code to be merged
-  
-
 ⭐️ Support the Project
-- If you find this project helpful, please consider giving it a star on GitHub! Your support helps to grow the project and reach more 
-  contributors.
-- ☘️Spread the word about the project on social media, developer forums, or any relevant community platforms.
-- 🚀 Thank you for your valuable contribution and for being a part of the Clueless Community! Together, we can make a difference. 🚀
-
- **Happy Contribution : Thanks for making a difference!🔥🔥**
+If you find this project helpful, please consider giving it a star on GitHub! Your support helps to grow the project and reach more contributors.
