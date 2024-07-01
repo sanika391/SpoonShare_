@@ -235,17 +235,19 @@ class _SignInScreenState extends State<SignInScreen> {
                                       builder: (context) => ForgotPasswordScreen()),
                                 );
                               },
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 8.0, right: 36.0),
-                                child: Text(
-                                  'forgot password?',
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 15,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    height: 0,
+                              child: Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 8.0, right: 36.0),
+                                  child: Text(
+                                    'forgot password?',
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 15,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      height: 0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -261,13 +263,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        'By signing in, you confirm that you have read and agreed to SpoopShare’s ',
+                                    'By signing in, you confirm that you have read and agreed to SpoopShare’s ',
                                     style: TextStyle(
                                       color: Colors.black.withOpacity(0.5),
                                       fontSize: 12,
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w400,
-                                      height: 0,
+                                      height: 1.2, // Adjusted line height
                                     ),
                                   ),
                                   const TextSpan(
@@ -278,7 +280,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
-                                      height: 0,
+                                      height: 1.2, // Adjusted line height
                                     ),
                                   ),
                                   TextSpan(
@@ -288,7 +290,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       fontSize: 11,
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w400,
-                                      height: 0,
+                                      height: 1.2, // Adjusted line height
                                     ),
                                   ),
                                   const TextSpan(
@@ -299,7 +301,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       fontFamily: 'DM Sans',
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
-                                      height: 0,
+                                      height: 1.2, // Adjusted line height
                                     ),
                                   ),
                                 ],
@@ -308,6 +310,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
+
                         Container(
                           margin: const EdgeInsets.only(top: 20.0),
                           child: GestureDetector(
