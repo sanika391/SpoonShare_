@@ -1,3 +1,43 @@
+<center>
+<img src="https://readme-typing-svg.herokuapp.com?color=FFA500&size=40&width=900&height=80&lines=Welcome+to+SpoonShare+🥣" />
+</center>
+
+## 🏆 Featured in:
+
+<table>
+    <tr>
+      <th>Event Logo</th>
+      <th>Event Name</th>
+      <th>Event Description</th>
+    </tr>
+    <tr>
+        <td><img src="assets/images/Gssoc Label.png" width="200" height="auto" loading="lazy" alt="GSSoC 24"/></td>
+        <td>GirlScript Summer of Code 2024</td>
+        <td>GirlScript Summer of Code is a three-month-long Open Source Program conducted every summer by GirlScript Foundation. It is an initiative to bring more beginners to Open-Source Software Development. 
+    </tr>
+</table>
+
+## Table of Contents
+- [💡 Introduction](#-introduction)
+- [Live Preview](#live-preview)
+- [SpoonShare Project](#spoonshare-project)
+  - [Intro To SpoonShare Video](#intro-to-spoonshare-video)
+- [Getting Started](#getting-started)
+- [Contributing Guidelines](#contributing-guidelines)
+- [Installation](#installation)
+  - [Setup With Docker](#setup-with-docker)
+  - [Setup With Docker Compose](#setup-with-docker-compose)
+  - [Setup Without Docker](#setup-without-docker)
+- [Resources](#resources)
+- [Screenshots](#screenshots)
+- [Code of Conduct](#code-of-conduct)
+- [Key Features](#key-features)
+- [Additional Features](#additional-features)
+- [Tech Stack](#tech-stack)
+- [SpoonShare Project Implementation Overview](#spoonshare-project-implementation-overview)
+- [License](#license)
+- [About Us](#about-us)
+
 ## SpoonShare 🥣
 
 ## 💡 Introduction:
@@ -39,6 +79,10 @@ Before running the project, make sure you have the necessary files downloaded:
 You can download these files from the following links:
 - [firebase_options.dart](https://drive.google.com/drive/folders/16JjJ-FC_-CMKyd1OO5Nejc1W44c6fM9y?usp=drive_link)
 - [google-services.json](https://drive.google.com/drive/folders/16JjJ-FC_-CMKyd1OO5Nejc1W44c6fM9y?usp=drive_link)
+
+## Contributing Guidelines
+
+If you are willing to contribute to this project then you must go through [Contributing Guidelines](CONTRIBUTING.md) carefully.
 
 ## Installation
 
@@ -129,6 +173,9 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
 <img src="https://github.com/shuence/SpoonShare/assets/65482186/a0ff1d91-e9f7-4768-a91d-24f8d510962a" width="250"> <img src="https://github.com/shuence/SpoonShare/assets/65482186/ba441ec8-78ec-43d5-8829-a3b8273370c5" width="250"> 
 </pre>
 
+## Code of Conduct 
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 ## Key Features:
 1. **Surplus Food Map:**
    - Visualize surplus food locations on an interactive map, facilitating easy navigation and access to available resources within a 30km radius.
@@ -199,6 +246,10 @@ src="https://github.com/shuence/SpoonShare/assets/65482186/5cd3781a-645d-45c1-a5
 ### Community Building and Partnerships
 - Robust community engagement strategy for user interaction.
 - Partnerships with NGOs, local businesses, and institutions for expanded impact.
+
+## LICENSE 
+
+This project is under this [LICENSE](LICENSE)
 
 # Hi, We are InnovisionSquad! 👋
 
