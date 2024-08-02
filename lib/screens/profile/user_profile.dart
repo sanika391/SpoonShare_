@@ -78,7 +78,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ? Colors.white.withOpacity(0.2)
         : Colors.black.withOpacity(0.2);
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Scrollbar(
+  thumbVisibility: true,
+  child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
@@ -267,7 +269,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                                 isEditing = false;
                                               });
                                             },
-                                          ),
+                                          ), 
+                                           ),
+
                                           IconButton(
                                             icon: Icon(
                                               Icons.check,
