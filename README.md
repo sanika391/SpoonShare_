@@ -1,5 +1,5 @@
 <center>
-<img src="https://readme-typing-svg.herokuapp.com?color=FFA500&size=40&width=900&height=80&lines=Welcome+to+SpoonShare 🥣" />
+<img src="https://readme-typing-svg.herokuapp.com?color=FFA500&size=40&width=900&height=80&lines=Welcome+to+SpoonShare+ 🥣" />
 </center>
 
 ## 🏆 Featured in:
